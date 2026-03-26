@@ -5,11 +5,11 @@ import team.janggi.domain.Position;
 import team.janggi.domain.piece.Empty;
 import team.janggi.domain.strategy.layout.normal.NormalLayoutStrategy;
 
-public class NormalBoardStrategyStrategy implements BoardStructStrategy {
+public class NormalBoardStrategy implements BoardStructStrategy {
 
     private final NormalLayoutStrategy layout;
 
-    public NormalBoardStrategyStrategy(NormalLayoutStrategy layout) {
+    public NormalBoardStrategy(NormalLayoutStrategy layout) {
         this.layout = layout;
     }
 
@@ -22,7 +22,7 @@ public class NormalBoardStrategyStrategy implements BoardStructStrategy {
 
         layout.init(status);
     }
-    
+
     private void initMapByEmpty(int rowSize, int colSize, BoardStatus status) {
         for (int row = 0; row < rowSize; row++) {
             for (int column = 0; column < colSize; column++) {
