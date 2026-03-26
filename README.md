@@ -23,3 +23,57 @@
 
 ### 고급 기능 요구 사항
 - 플레이어가 이동 가능한 말의 이동 경로를 출력한다.
+
+---
+
+## 도메인 구성
+
+- Board: 장기판을 나타내는 클래스
+  - Map으로 기물의 위치를 관리한다.
+  - 보드 상태를 출력하는 메서드를 포함한다.
+- Piece
+  - pieceType:
+  - PieceMovementStrategy:
+  - 
+- Position
+  - row_index
+  - colum_index
+- PieceMovementStrategy : 기물의 이동 전략
+- PieceType: 기물 종류를 나타내는 Enum
+  - KING, GUARD, HORSE, ELEPHANT, CHARIOT, CANNON, SOLDIER, EMPTY
+- PieceLayoutStrategy : 기물 배치 전략
+- BoardStructureStrategy : 보드판 크기 생성 전략
+
+- 아래 일급 객체로 래핑하기
+Map<Position, Piece> map = 
+
+interface MapStatus {
+  move();
+
+  remove();
+  .
+  .
+  .
+}
+
+InMemoryMapStatus implements MapStatus {
+  Map<Position, Piece> map = new HashMap<>();
+
+hashsize(90)
+
+// (new Postion(1000, 2000), piece) map
+public void move(position) {
+map.get(postion)
+}
+// MapStatus 인터페이스 구현
+}
+
+PlacementStrategy.init(MapStatus mapStatus) {
+    // 기물 생성 및 배치 로직
+}
+
+- 피스 타입 enum에 전략을 주입받는다.
+- 피스 타입을 초나라/한나라 둘다 구분해서 만든다.(그럼 team 필요없긴함)
+  - team enum
+  - 피스타입에 필드로 주입.
+- team이랑 피스타입 래핑한다.

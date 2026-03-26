@@ -11,7 +11,7 @@ import team.janggi.domain.piece.Horse;
 import team.janggi.domain.piece.King;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.Soldier;
-import team.janggi.domain.strategy.boardstruct.NormalBoardStrategyStrategy;
+import team.janggi.domain.strategy.boardstruct.NormalBoardStrategy;
 import team.janggi.domain.strategy.layout.normal.NormalLayoutStrategy;
 import team.janggi.domain.strategy.layout.normal.NormalSetup;
 
@@ -20,7 +20,7 @@ public class BoardTest {
     @Test
     void 기본_장기_보드_생성_테스트() {
         var layout = new NormalLayoutStrategy(NormalSetup.바깥상차림, NormalSetup.바깥상차림);
-        var boardStruct = new NormalBoardStrategyStrategy(layout);
+        var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
         board.initMapStatus();
@@ -31,7 +31,7 @@ public class BoardTest {
     @Test
     void 기본_장기_배치_테스트() {
         var layout = new NormalLayoutStrategy(NormalSetup.바깥상차림, NormalSetup.바깥상차림);
-        var boardStruct = new NormalBoardStrategyStrategy(layout);
+        var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
         board.initMapStatus();
@@ -95,7 +95,7 @@ public class BoardTest {
 
     private void runTest(NormalSetup choSetup, NormalSetup hanSetup) {
         var layout = new NormalLayoutStrategy(choSetup, hanSetup);
-        var boardStruct = new NormalBoardStrategyStrategy(layout);
+        var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
         board.initMapStatus();

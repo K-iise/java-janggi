@@ -12,4 +12,16 @@ public class SoldierMoveStrategy implements MoveStrategy {
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
         return false;
     }
+
+    private boolean canChoForward(Position from, Position to) {
+        return from.y() - to.y() == 1 && from.x() == to.x();
+    }
+
+    private boolean canHanForward(Position from, Position to) {
+        return to.y() - from.y() == 1 && from.x() == to.x();
+    }
+
+    private boolean canSideMove(Position from, Position to) {
+        return from.y() == to.y() && Math.abs(from.x() - to.x()) == 1;
+    }
 }
