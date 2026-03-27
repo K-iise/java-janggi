@@ -1,8 +1,8 @@
 package team.janggi.domain.strategy.move;
 
 import java.util.Map;
-import team.janggi.domain.piece.Piece;
 import team.janggi.domain.Position;
+import team.janggi.domain.piece.Piece;
 
 public interface MoveStrategy {
     MoveStrategy emptyMoveStrategy = new EmptyMoveStrategy();
