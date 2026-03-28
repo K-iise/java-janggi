@@ -1,14 +1,15 @@
 package team.janggi.domain.strategy.layout.normal;
 
 import team.janggi.domain.BoardStatus;
+import team.janggi.domain.Position;
+import team.janggi.domain.Team;
 import team.janggi.domain.piece.Cannon;
 import team.janggi.domain.piece.Chariot;
 import team.janggi.domain.piece.Elephant;
 import team.janggi.domain.piece.Guard;
 import team.janggi.domain.piece.Horse;
 import team.janggi.domain.piece.King;
-import team.janggi.domain.Position;
-import team.janggi.domain.Team;
+import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.Soldier;
 import team.janggi.domain.strategy.layout.LayoutStrategy;
 
@@ -94,35 +95,44 @@ public class NormalLayoutStrategy implements LayoutStrategy {
 
     private void placeBySetup(BoardStatus boardStatus, NormalSetup setup, Team team, int row) {
         if (setup == NormalSetup.왼상차림) {
-            boardStatus.setPiece(new Position(row, 1), new Elephant(team));
-            boardStatus.setPiece(new Position(row, 2), new Horse(team));
-            boardStatus.setPiece(new Position(row, 6), new Horse(team));
-            boardStatus.setPiece(new Position(row, 7), new Elephant(team));
+            place(boardStatus, row, team, 1, new Elephant(team));
+            place(boardStatus, row, team, 2, new Horse(team));
+            place(boardStatus, row, team, 6, new Elephant(team));
+            place(boardStatus, row, team, 7, new Horse(team));
             return;
         }
 
         if (setup == NormalSetup.오른상차림) {
-            boardStatus.setPiece(new Position(row, 1), new Horse(team));
-            boardStatus.setPiece(new Position(row, 2), new Elephant(team));
-            boardStatus.setPiece(new Position(row, 6), new Elephant(team));
-            boardStatus.setPiece(new Position(row, 7), new Horse(team));
+            place(boardStatus, row, team, 1, new Horse(team));
+            place(boardStatus, row, team, 2, new Elephant(team));
+            place(boardStatus, row, team, 6, new Horse(team));
+            place(boardStatus, row, team, 7, new Elephant(team));
             return;
         }
 
         if (setup == NormalSetup.안상차림) {
-            boardStatus.setPiece(new Position(row, 1), new Horse(team));
-            boardStatus.setPiece(new Position(row, 2), new Elephant(team));
-            boardStatus.setPiece(new Position(row, 6), new Horse(team));
-            boardStatus.setPiece(new Position(row, 7), new Elephant(team));
+            place(boardStatus, row, team, 1, new Horse(team));
+            place(boardStatus, row, team, 2, new Elephant(team));
+            place(boardStatus, row, team, 6, new Elephant(team));
+            place(boardStatus, row, team, 7, new Horse(team));
             return;
         }
 
         if (setup == NormalSetup.바깥상차림) {
-            boardStatus.setPiece(new Position(row, 1), new Elephant(team));
-            boardStatus.setPiece(new Position(row, 2), new Horse(team));
-            boardStatus.setPiece(new Position(row, 6), new Elephant(team));
-            boardStatus.setPiece(new Position(row, 7), new Horse(team));
-            return;
+            place(boardStatus, row, team, 1, new Elephant(team));
+            place(boardStatus, row, team, 2, new Horse(team));
+            place(boardStatus, row, team, 6, new Horse(team));
+            place(boardStatus, row, team, 7, new Elephant(team));
         }
+    }
+
+    private void place(BoardStatus boardStatus, int row, Team team, int column, Piece piece) {
+        int actualColumn = column;
+
+        if (team == Team.HAN) {
+            actualColumn = 8 - column;
+        }
+
+        boardStatus.setPiece(new Position(row, actualColumn), piece);
     }
 }
