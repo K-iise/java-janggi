@@ -20,8 +20,8 @@ public class ConsoleOutputView {
     private static final String ANSI_RED = "\u001B[31m";
 
     public void print(Board board) {
-        Map<Position, Piece> status = board.getStatus();
-        int totalCellCount = ROW_SIZE * COLUMN_SIZE;
+        final Map<Position, Piece> status = board.getStatus();
+        final int totalCellCount = ROW_SIZE * COLUMN_SIZE;
 
         printColumnHeader();
         for (int index = 0; index < totalCellCount; index++) {
@@ -53,7 +53,7 @@ public class ConsoleOutputView {
     }
 
     private String pieceCode(Piece piece) {
-        boolean isCho = piece.isSameTeam(Team.CHO);
+        final boolean isCho = piece.isSameTeam(Team.CHO);
 
         return switch (piece.getPieceType()) {
             case KING -> isCho ? "宮" : "將";
@@ -86,11 +86,19 @@ public class ConsoleOutputView {
     }
 
     private String rowPrefix(int row, int col) {
-        return col == 0 ? String.format("%2d%s", row, SPACE) : EMPTY_TEXT;
+        if (col == 0) {
+            return String.format("%2d%s", row, SPACE);
+        }
+
+        return EMPTY_TEXT;
     }
 
     private String rowSuffix(int col) {
-        return col == COLUMN_SIZE - 1 ? System.lineSeparator() : EMPTY_TEXT;
+        if (col == COLUMN_SIZE - 1) {
+            return System.lineSeparator();
+        }
+
+        return EMPTY_TEXT;
     }
 
     private void printText(String text) {
