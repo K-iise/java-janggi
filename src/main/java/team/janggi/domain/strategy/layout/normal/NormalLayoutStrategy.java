@@ -65,7 +65,7 @@ public class NormalLayoutStrategy implements LayoutStrategy {
         boardStatus.setPiece(new Position(CHO_BACK_RANK_ROW, 5), new Guard(Team.CHO));
 
         // 상/마 배치
-        placeBySetup(boardStatus, choSetup, Team.CHO, CHO_BACK_RANK_ROW);
+        setup(boardStatus, choSetup, Team.CHO, CHO_BACK_RANK_ROW);
     }
 
     private void initHanBatch(BoardStatus boardStatus) {
@@ -90,43 +90,43 @@ public class NormalLayoutStrategy implements LayoutStrategy {
         boardStatus.setPiece(new Position(HAN_BACK_RANK_ROW, 5), new Guard(Team.HAN));
 
         // 상/마 배치
-        placeBySetup(boardStatus, hanSetup, Team.HAN, HAN_BACK_RANK_ROW);
+        setup(boardStatus, hanSetup, Team.HAN, HAN_BACK_RANK_ROW);
     }
 
-    private void placeBySetup(BoardStatus boardStatus, NormalSetup setup, Team team, int row) {
+    private void setup(BoardStatus boardStatus, NormalSetup setup, Team team, int row) {
         if (setup == NormalSetup.왼상차림) {
-            place(boardStatus, row, team, 1, new Elephant(team));
-            place(boardStatus, row, team, 2, new Horse(team));
-            place(boardStatus, row, team, 6, new Elephant(team));
-            place(boardStatus, row, team, 7, new Horse(team));
+            setupPiece(boardStatus, row, team, 1, new Elephant(team));
+            setupPiece(boardStatus, row, team, 2, new Horse(team));
+            setupPiece(boardStatus, row, team, 6, new Elephant(team));
+            setupPiece(boardStatus, row, team, 7, new Horse(team));
             return;
         }
 
         if (setup == NormalSetup.오른상차림) {
-            place(boardStatus, row, team, 1, new Horse(team));
-            place(boardStatus, row, team, 2, new Elephant(team));
-            place(boardStatus, row, team, 6, new Horse(team));
-            place(boardStatus, row, team, 7, new Elephant(team));
+            setupPiece(boardStatus, row, team, 1, new Horse(team));
+            setupPiece(boardStatus, row, team, 2, new Elephant(team));
+            setupPiece(boardStatus, row, team, 6, new Horse(team));
+            setupPiece(boardStatus, row, team, 7, new Elephant(team));
             return;
         }
 
         if (setup == NormalSetup.안상차림) {
-            place(boardStatus, row, team, 1, new Horse(team));
-            place(boardStatus, row, team, 2, new Elephant(team));
-            place(boardStatus, row, team, 6, new Elephant(team));
-            place(boardStatus, row, team, 7, new Horse(team));
+            setupPiece(boardStatus, row, team, 1, new Horse(team));
+            setupPiece(boardStatus, row, team, 2, new Elephant(team));
+            setupPiece(boardStatus, row, team, 6, new Elephant(team));
+            setupPiece(boardStatus, row, team, 7, new Horse(team));
             return;
         }
 
         if (setup == NormalSetup.바깥상차림) {
-            place(boardStatus, row, team, 1, new Elephant(team));
-            place(boardStatus, row, team, 2, new Horse(team));
-            place(boardStatus, row, team, 6, new Horse(team));
-            place(boardStatus, row, team, 7, new Elephant(team));
+            setupPiece(boardStatus, row, team, 1, new Elephant(team));
+            setupPiece(boardStatus, row, team, 2, new Horse(team));
+            setupPiece(boardStatus, row, team, 6, new Horse(team));
+            setupPiece(boardStatus, row, team, 7, new Elephant(team));
         }
     }
 
-    private void place(BoardStatus boardStatus, int row, Team team, int column, Piece piece) {
+    private void setupPiece(BoardStatus boardStatus, int row, Team team, int column, Piece piece) {
         int actualColumn = column;
 
         if (team == Team.HAN) {
