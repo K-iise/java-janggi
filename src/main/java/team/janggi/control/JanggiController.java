@@ -1,5 +1,6 @@
 package team.janggi.control;
 
+import java.util.Map;
 import team.janggi.domain.Board;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
@@ -19,28 +20,39 @@ public class JanggiController {
     }
 
     public void run() {
+        final Board board = createBoard();
+        board.initBoard();
+
+        Team currentTurn = Team.CHO;
+        while (true) {
+            currentTurn = doTurn(board, currentTurn);
+        }
+    }
+
+    private Board createBoard() {
         final NormalSetup choSetup = consoleInputView.readChoNormalSetup();
         final NormalSetup hanSetup = consoleInputView.readHanNormalSetup();
 
-        final Board board = new Board(new NormalBoardStrategy(new NormalLayoutStrategy(choSetup, hanSetup)));
+        final NormalLayoutStrategy layout = new NormalLayoutStrategy(choSetup, hanSetup);
+        final NormalBoardStrategy boardStructStrategy = new NormalBoardStrategy(layout);
+        return new Board(boardStructStrategy);
+    }
 
-        board.initBoard();
-        Team current = Team.CHO;
+    private Team doTurn(Board board, Team currentTurn) {
+        consoleOutputView.print(board);
+        final Position from = consoleInputView.readMoveSource(currentTurn);
+        final Position to = consoleInputView.readMoveDestination(currentTurn);
 
-        while (true) {
-            consoleOutputView.print(board);
-            Position from = consoleInputView.readMoveSource(current);
-            Position to = consoleInputView.readMoveDestination(current);
-            try {
-                board.move(current, from, to);
-                current = nextTeam(current);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+        try {
+            board.move(currentTurn, from, to);
+            return nextTeam(currentTurn);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return currentTurn;
         }
     }
 
     private Team nextTeam(Team team) {
-        return team == Team.CHO ? Team.HAN : Team.CHO;
+        return Map.of(Team.CHO, Team.HAN, Team.HAN, Team.CHO).get(team);
     }
 }
