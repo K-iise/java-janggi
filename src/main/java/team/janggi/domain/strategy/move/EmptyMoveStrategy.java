@@ -5,7 +5,6 @@ import team.janggi.domain.piece.Piece;
 import team.janggi.domain.Position;
 
 public class EmptyMoveStrategy implements MoveStrategy {
-
     public static final EmptyMoveStrategy instance = new EmptyMoveStrategy();
 
     @Override

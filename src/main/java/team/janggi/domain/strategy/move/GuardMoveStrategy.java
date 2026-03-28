@@ -5,7 +5,6 @@ import team.janggi.domain.Position;
 import team.janggi.domain.piece.Piece;
 
 public class GuardMoveStrategy implements MoveStrategy {
-
     private static final int MAX_MOVE_DISTANCE = 1;
 
     public static final GuardMoveStrategy instance = new GuardMoveStrategy();
