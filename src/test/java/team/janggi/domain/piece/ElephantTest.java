@@ -16,7 +16,7 @@ public class ElephantTest {
 
     @BeforeEach
     void setUp() {
-        new NormalBoardStrategy(EmptyLayoutStrategy.instance).initMapStatus(boardStatus);
+        new NormalBoardStrategy(EmptyLayoutStrategy.instance).initBoardStatus(boardStatus);
     }
 
     @ParameterizedTest

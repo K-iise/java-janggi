@@ -12,11 +12,6 @@ public class LocalMemoryBoardStatus implements BoardStatus {
     }
 
     @Override
-    public Piece getPiece(Position position) {
-        return null;
-    }
-
-    @Override
     public void movePiece(Position source, Position destination) {
 
     }

@@ -23,7 +23,7 @@ public class BoardTest {
         var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
-        board.initMapStatus();
+        board.initBoard();
 
         Assertions.assertEquals(90, board.getStatus().size());
     }
@@ -34,7 +34,7 @@ public class BoardTest {
         var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
-        board.initMapStatus();
+        board.initBoard();
 
         Map<Position, Piece> pieceMap = board.getStatus();
         // 초나라(CHO)가 아래쪽에 잘 배치되었는지 확인
@@ -98,7 +98,7 @@ public class BoardTest {
         var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
-        board.initMapStatus();
+        board.initBoard();
 
         Map<Position, Piece> pieceMap = board.getStatus();
 
@@ -141,5 +141,28 @@ public class BoardTest {
                     () -> Assertions.assertEquals(new Horse(team), pieceMap.get(new Position(row, 7)))
             );
         }
+    }
+
+
+    @Test
+    public void 기물_이동_테스트() {
+        var boardStruct = new NormalBoardStrategy(EmptyLayoutStrategy.instance);
+        var boardStatus = new LocalMemoryBoardStatus();
+        var board = new Board(boardStatus, boardStruct);
+
+        board.initBoard();
+
+        // 졸 기물 세팅
+        Soldier soldier = new Soldier(Team.CHO);
+        boardStatus.setPiece(new Position(6, 5), soldier);
+
+        // 초나라의 졸을 왼쪽으로 한칸 이동
+        Position from = new Position(6, 5);
+        Position to = new Position(5, 5);
+        board.move(Team.CHO, from, to);
+
+        // 이동 후 해당 위치에 병이 있는지 확인
+        Map<Position, Piece> pieceMap = board.getStatus();
+        Assertions.assertEquals(soldier, pieceMap.get(to));
     }
 }

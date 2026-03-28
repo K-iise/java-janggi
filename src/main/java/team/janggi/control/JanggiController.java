@@ -20,7 +20,7 @@ public class JanggiController {
                 )
         );
 
-        board.initMapStatus();
+        board.initBoard();
         consoleOutputView.print(board);
     }
 }

@@ -14,7 +14,7 @@ public class NormalBoardStrategy implements BoardStructStrategy {
     }
 
     @Override
-    public void initMapStatus(BoardStatus status) {
+    public void initBoardStatus(BoardStatus status) {
         final int Normal_BOARD_ROW_SIZE = 10;
         final int Normal_BOARD_COL_SIZE = 9;
 
