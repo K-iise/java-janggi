@@ -4,6 +4,6 @@ import team.janggi.domain.BoardStatus;
 
 public interface BoardStructStrategy {
 
-    void initMapStatus(BoardStatus status);
+    void initBoardStatus(BoardStatus status);
 
 }

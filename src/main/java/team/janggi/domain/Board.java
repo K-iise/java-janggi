@@ -17,12 +17,16 @@ public class Board {
         this.boardStructStrategy = boardStructStrategy;
     }
 
-    public void initMapStatus() {
-        boardStructStrategy.initMapStatus(boardStatus);
+    public void initBoard() {
+        boardStructStrategy.initBoardStatus(boardStatus);
     }
 
     public Map<Position, Piece> getStatus() {
         return boardStatus.getBoardStatus();
+    }
+
+    public void move(Team team, Position from, Position to) {
+        boardStatus.movePiece(team, from, to);
     }
 
 }
