@@ -5,7 +5,7 @@ public record Position(
         int y
 ) {
 
-    public static final int MINIMUM_INDEX = 0;
+    private static final int MINIMUM_INDEX = 0;
 
     public Position {
         if (x < MINIMUM_INDEX || y < MINIMUM_INDEX) {
