@@ -27,6 +27,7 @@ public class ElephantMoveStrategy implements MoveStrategy {
 
         int fromX = from.x();
         int fromY = from.y();
+
         if (dx > dy) {
             fromX += (to.x() - from.x()) / 3;
         }
@@ -44,8 +45,8 @@ public class ElephantMoveStrategy implements MoveStrategy {
         int y2 = (to.y() - from.y()) / Math.abs(to.y() - from.y());
 
         Position obstaclePosition2 = new Position(fromX+x2, fromY+y2);
-        Piece obastacle2 = mapStatus.get(obstaclePosition2);
-        if (!obastacle2.isSamePieceType(PieceType.EMPTY)) {
+        Piece obstacle2 = mapStatus.get(obstaclePosition2);
+        if (!obstacle2.isSamePieceType(PieceType.EMPTY)) {
             return false;
         }
         return true;

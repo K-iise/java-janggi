@@ -48,7 +48,6 @@ public class Piece {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        // 클래스 타입이 정확히 일치하는지 확인 (상속 관계에서의 비교 방지)
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
         return team == piece.team;
