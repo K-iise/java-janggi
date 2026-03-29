@@ -18,13 +18,13 @@ public class NormalLayoutStrategy implements LayoutStrategy {
     private final NormalSetup choSetup;
     private final NormalSetup hanSetup;
 
-    // 초(CHO)는 이제 아래쪽(Y 번호가 큰 쪽)에 위치합니다.
+    // 초(CHO)는 아래쪽(Y 번호가 큰 쪽)에 위치합니다.
     private static final int CHO_BACK_RANK_ROW = 9;    // 맨 아래
     private static final int CHO_KING_RANK_ROW = 8;    // 궁성 안
     private static final int CHO_CANNON_RANK_ROW = 7;  // 포 라인
     private static final int CHO_SOLDIER_RANK_ROW = 6; // 졸 라인
 
-    // 한(HAN)은 이제 위쪽(Y 번호가 작은 쪽)에 위치합니다.
+    // 한(HAN)은 위쪽(Y 번호가 작은 쪽)에 위치합니다.
     private static final int HAN_BACK_RANK_ROW = 0;    // 맨 위
     private static final int HAN_KING_RANK_ROW = 1;    // 궁성 안
     private static final int HAN_CANNON_RANK_ROW = 2;  // 포 라인
