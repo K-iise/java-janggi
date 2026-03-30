@@ -19,7 +19,7 @@ public class BoardTest {
 
     @Test
     void 기본_장기_보드_생성_테스트() {
-        var layout = new NormalLayoutStrategy(NormalSetup.바깥상차림, NormalSetup.바깥상차림);
+        var layout = new NormalLayoutStrategy(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
         var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
@@ -30,7 +30,7 @@ public class BoardTest {
 
     @Test
     void 기본_장기_배치_테스트() {
-        var layout = new NormalLayoutStrategy(NormalSetup.바깥상차림, NormalSetup.바깥상차림);
+        var layout = new NormalLayoutStrategy(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
         var boardStruct = new NormalBoardStrategy(layout);
 
         Board board = new Board(boardStruct);
@@ -78,19 +78,19 @@ public class BoardTest {
     }
 
     @Test void 초_바깥_한_바깥() {
-        runTest(NormalSetup.바깥상차림, NormalSetup.바깥상차림);
+        runTest(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
     }
 
     @Test void 초_바깥_한_안() {
-        runTest(NormalSetup.바깥상차림, NormalSetup.안상차림);
+        runTest(NormalSetup.HEEH_LAYOUT, NormalSetup.EHHE_LAYOUT);
     }
 
     @Test void 초_안_한_왼() {
-        runTest(NormalSetup.안상차림, NormalSetup.왼상차림);
+        runTest(NormalSetup.EHHE_LAYOUT, NormalSetup.EHEH_LAYOUT);
     }
 
     @Test void 초_왼_한_오른() {
-        runTest(NormalSetup.왼상차림, NormalSetup.오른상차림);
+        runTest(NormalSetup.EHEH_LAYOUT, NormalSetup.HEHE_LAYOUT);
     }
 
     private void runTest(NormalSetup choSetup, NormalSetup hanSetup) {
@@ -113,28 +113,28 @@ public class BoardTest {
 
     private void assertPieceSetup(Map<Position, Piece> pieceMap, int row, Team team, NormalSetup setup) {
         switch (setup) {
-            case 왼상차림 -> Assertions.assertAll(
+            case EHEH_LAYOUT -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, row, team, 1, new Elephant(team)),
                     () -> assertPiece(pieceMap, row, team, 2, new Horse(team)),
                     () -> assertPiece(pieceMap, row, team, 6, new Elephant(team)),
                     () -> assertPiece(pieceMap, row, team, 7, new Horse(team))
             );
 
-            case 오른상차림 -> Assertions.assertAll(
+            case HEHE_LAYOUT -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, row, team, 1, new Horse(team)),
                     () -> assertPiece(pieceMap, row, team, 2, new Elephant(team)),
                     () -> assertPiece(pieceMap, row, team, 6, new Horse(team)),
                     () -> assertPiece(pieceMap, row, team, 7, new Elephant(team))
             );
 
-            case 안상차림 -> Assertions.assertAll(
+            case EHHE_LAYOUT -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, row, team, 1, new Horse(team)),
                     () -> assertPiece(pieceMap, row, team, 2, new Elephant(team)),
                     () -> assertPiece(pieceMap, row, team, 6, new Elephant(team)),
                     () -> assertPiece(pieceMap, row, team, 7, new Horse(team))
             );
 
-            case 바깥상차림 -> Assertions.assertAll(
+            case HEEH_LAYOUT -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, row, team, 1, new Elephant(team)),
                     () -> assertPiece(pieceMap, row, team, 2, new Horse(team)),
                     () -> assertPiece(pieceMap, row, team, 6, new Horse(team)),

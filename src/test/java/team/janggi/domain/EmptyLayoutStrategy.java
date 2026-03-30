@@ -7,7 +7,7 @@ public class EmptyLayoutStrategy extends NormalLayoutStrategy {
     public static final EmptyLayoutStrategy instance = new EmptyLayoutStrategy();
 
     public EmptyLayoutStrategy() {
-        super(NormalSetup.바깥상차림, NormalSetup.바깥상차림);
+        super(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
     }
 
     @Override

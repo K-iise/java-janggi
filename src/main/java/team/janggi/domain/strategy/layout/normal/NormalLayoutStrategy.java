@@ -94,7 +94,7 @@ public class NormalLayoutStrategy implements LayoutStrategy {
     }
 
     private void setup(BoardStatus boardStatus, NormalSetup setup, Team team, int row) {
-        if (setup == NormalSetup.왼상차림) {
+        if (setup == NormalSetup.EHEH_LAYOUT) {
             setupPiece(boardStatus, row, team, 1, new Elephant(team));
             setupPiece(boardStatus, row, team, 2, new Horse(team));
             setupPiece(boardStatus, row, team, 6, new Elephant(team));
@@ -102,7 +102,7 @@ public class NormalLayoutStrategy implements LayoutStrategy {
             return;
         }
 
-        if (setup == NormalSetup.오른상차림) {
+        if (setup == NormalSetup.HEHE_LAYOUT) {
             setupPiece(boardStatus, row, team, 1, new Horse(team));
             setupPiece(boardStatus, row, team, 2, new Elephant(team));
             setupPiece(boardStatus, row, team, 6, new Horse(team));
@@ -110,7 +110,7 @@ public class NormalLayoutStrategy implements LayoutStrategy {
             return;
         }
 
-        if (setup == NormalSetup.안상차림) {
+        if (setup == NormalSetup.EHHE_LAYOUT) {
             setupPiece(boardStatus, row, team, 1, new Horse(team));
             setupPiece(boardStatus, row, team, 2, new Elephant(team));
             setupPiece(boardStatus, row, team, 6, new Elephant(team));
@@ -118,7 +118,7 @@ public class NormalLayoutStrategy implements LayoutStrategy {
             return;
         }
 
-        if (setup == NormalSetup.바깥상차림) {
+        if (setup == NormalSetup.HEEH_LAYOUT) {
             setupPiece(boardStatus, row, team, 1, new Elephant(team));
             setupPiece(boardStatus, row, team, 2, new Horse(team));
             setupPiece(boardStatus, row, team, 6, new Horse(team));
