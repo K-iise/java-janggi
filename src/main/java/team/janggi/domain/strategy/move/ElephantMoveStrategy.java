@@ -1,5 +1,6 @@
 package team.janggi.domain.strategy.move;
 
+import java.util.List;
 import java.util.Map;
 import team.janggi.domain.Position;
 import team.janggi.domain.piece.Piece;
@@ -22,34 +23,35 @@ public class ElephantMoveStrategy implements MoveStrategy {
     }
 
     private boolean isPathBlock(Position from, Position to, Map<Position, Piece> mapStatus) {
+        List<Position> obstaclePositions = getObstaclePosition(from, to);
+        return !isOccupied(obstaclePositions, mapStatus);
+    }
+
+    private List<Position> getObstaclePosition(Position from, Position to) {
         int dx = Math.abs(from.x() - to.x());
         int dy = Math.abs(from.y() - to.y());
 
-        int fromX = from.x();
-        int fromY = from.y();
+        int obstacleX = from.x();
+        int obstacleY = from.y();
 
         if (dx > dy) {
-            fromX += (to.x() - from.x()) / 3;
+            obstacleX += (to.x() - from.x()) / 3;
         }
         if (dy > dx) {
-            fromY += (to.y() - from.y()) / 3;
+            obstacleY += (to.y() - from.y()) / 3;
         }
 
-        Position obstaclePosition = new Position(fromX, fromY);
-        Piece obstacle = mapStatus.get(obstaclePosition);
-        if (!obstacle.isSamePieceType(PieceType.EMPTY)){
-            return false;
-        }
+        int obstacle2X = Integer.signum(to.x() - from.x());
+        int obstacle2Y = Integer.signum(to.y() - from.y());
 
-        int x2 = (to.x() - from.x()) / Math.abs(to.x() - from.x());
-        int y2 = (to.y() - from.y()) / Math.abs(to.y() - from.y());
+        Position obstacle = new Position(obstacleX, obstacleY);
+        Position obstacle2 = new Position(obstacleX + obstacle2X, obstacleY + obstacle2Y);
+        return List.of(obstacle, obstacle2);
+    }
 
-        Position obstaclePosition2 = new Position(fromX+x2, fromY+y2);
-        Piece obstacle2 = mapStatus.get(obstaclePosition2);
-        if (!obstacle2.isSamePieceType(PieceType.EMPTY)) {
-            return false;
-        }
-        return true;
+    private boolean isOccupied(List<Position> obstaclePositions, Map<Position, Piece> mapStatus) {
+        return obstaclePositions.stream()
+                .anyMatch(obstacle -> !mapStatus.get(obstacle).isSamePieceType(PieceType.EMPTY));
     }
 
     private boolean canKill(Position from, Position to, Map<Position, Piece> mapStatus) {
