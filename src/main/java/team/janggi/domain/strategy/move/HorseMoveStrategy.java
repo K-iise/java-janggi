@@ -6,7 +6,13 @@ import team.janggi.domain.piece.Empty;
 import team.janggi.domain.piece.Piece;
 
 public class HorseMoveStrategy implements MoveStrategy {
-    public static final HorseMoveStrategy instance = new HorseMoveStrategy();
+    public static final HorseMoveStrategy INSTANCE = new HorseMoveStrategy();
+
+    private HorseMoveStrategy() {}
+
+    public static HorseMoveStrategy getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {

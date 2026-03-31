@@ -6,7 +6,13 @@ import team.janggi.domain.Team;
 import team.janggi.domain.piece.Piece;
 
 public class SoldierMoveStrategy implements MoveStrategy {
-    public static final SoldierMoveStrategy instance = new SoldierMoveStrategy();
+    public static final SoldierMoveStrategy INSTANCE = new SoldierMoveStrategy();
+
+    private SoldierMoveStrategy() {}
+
+    public static SoldierMoveStrategy getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
