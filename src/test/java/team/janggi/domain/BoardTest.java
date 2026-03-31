@@ -19,7 +19,7 @@ public class BoardTest {
 
     @Test
     void 기본_장기_보드_생성_테스트() {
-        var boardStruct = new BoardFactory(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
+        var boardStruct = new BoardFactory(JanggiFormation.HEEH, JanggiFormation.HEEH);
 
         Board board = new Board(boardStruct);
         board.initBoard();
@@ -29,7 +29,7 @@ public class BoardTest {
 
     @Test
     void 기본_장기_배치_테스트() {
-        var boardStruct = new BoardFactory(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
+        var boardStruct = new BoardFactory(JanggiFormation.HEEH, JanggiFormation.HEEH);
 
         Board board = new Board(boardStruct);
         board.initBoard();
@@ -76,22 +76,22 @@ public class BoardTest {
     }
 
     @Test void 초_바깥_한_바깥() {
-        runTest(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
+        runTest(JanggiFormation.HEEH, JanggiFormation.HEEH);
     }
 
     @Test void 초_바깥_한_안() {
-        runTest(NormalSetup.HEEH_LAYOUT, NormalSetup.EHHE_LAYOUT);
+        runTest(JanggiFormation.HEEH, JanggiFormation.EHHE);
     }
 
     @Test void 초_안_한_왼() {
-        runTest(NormalSetup.EHHE_LAYOUT, NormalSetup.EHEH_LAYOUT);
+        runTest(JanggiFormation.EHHE, JanggiFormation.EHEH);
     }
 
     @Test void 초_왼_한_오른() {
-        runTest(NormalSetup.EHEH_LAYOUT, NormalSetup.HEHE_LAYOUT);
+        runTest(JanggiFormation.EHEH, JanggiFormation.HEHE);
     }
 
-    private void runTest(NormalSetup choSetup, NormalSetup hanSetup) {
+    private void runTest(JanggiFormation choSetup, JanggiFormation hanSetup) {
         var boardFactory = new BoardFactory(choSetup, hanSetup);
 
         Board board = new Board(boardFactory);
@@ -108,30 +108,30 @@ public class BoardTest {
         assertPieceSetup(pieceMap, 0, Team.HAN, hanSetup);
     }
 
-    private void assertPieceSetup(Map<Position, Piece> pieceMap, int y, Team team, NormalSetup setup) {
+    private void assertPieceSetup(Map<Position, Piece> pieceMap, int y, Team team, JanggiFormation setup) {
         switch (setup) {
-            case EHEH_LAYOUT -> Assertions.assertAll(
+            case EHEH -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, y, team, 1, new Elephant(team)),
                     () -> assertPiece(pieceMap, y, team, 2, new Horse(team)),
                     () -> assertPiece(pieceMap, y, team, 6, new Elephant(team)),
                     () -> assertPiece(pieceMap, y, team, 7, new Horse(team))
             );
 
-            case HEHE_LAYOUT -> Assertions.assertAll(
+            case HEHE -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, y, team, 1, new Horse(team)),
                     () -> assertPiece(pieceMap, y, team, 2, new Elephant(team)),
                     () -> assertPiece(pieceMap, y, team, 6, new Horse(team)),
                     () -> assertPiece(pieceMap, y, team, 7, new Elephant(team))
             );
 
-            case EHHE_LAYOUT -> Assertions.assertAll(
+            case EHHE -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, y, team, 1, new Horse(team)),
                     () -> assertPiece(pieceMap, y, team, 2, new Elephant(team)),
                     () -> assertPiece(pieceMap, y, team, 6, new Elephant(team)),
                     () -> assertPiece(pieceMap, y, team, 7, new Horse(team))
             );
 
-            case HEEH_LAYOUT -> Assertions.assertAll(
+            case HEEH -> Assertions.assertAll(
                     () -> assertPiece(pieceMap, y, team, 1, new Elephant(team)),
                     () -> assertPiece(pieceMap, y, team, 2, new Horse(team)),
                     () -> assertPiece(pieceMap, y, team, 6, new Horse(team)),
@@ -153,7 +153,7 @@ public class BoardTest {
 
     @Test
     public void 기물_이동_테스트() {
-        var boardStruct = new BoardFactory(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
+        var boardStruct = new BoardFactory(JanggiFormation.HEEH, JanggiFormation.HEEH);
         var boardStatus = new LocalMemoryBoardStatus();
         var board = new Board(boardStatus, boardStruct);
 

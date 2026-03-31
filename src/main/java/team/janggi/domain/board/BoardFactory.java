@@ -11,14 +11,14 @@ import team.janggi.domain.piece.Horse;
 import team.janggi.domain.piece.King;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.Soldier;
-import team.janggi.domain.NormalSetup;
+import team.janggi.domain.JanggiFormation;
 
 public class BoardFactory {
     private static final int BOARD_Y_SIZE = 10;
     private static final int BOARD_X_SIZE = 9;
 
-    private final NormalSetup choSetup;
-    private final NormalSetup hanSetup;
+    private final JanggiFormation choSetup;
+    private final JanggiFormation hanSetup;
 
     // 초(CHO)는 아래쪽(Y 번호가 큰 쪽)에 위치합니다.
     private static final int CHO_BACK_RANK_Y = 9;    // 맨 아래
@@ -34,7 +34,7 @@ public class BoardFactory {
 
     private static final int[] SOLDIER_X = {0, 2, 4, 6, 8};
 
-    public BoardFactory(NormalSetup choSetup, NormalSetup hanSetup) {
+    public BoardFactory(JanggiFormation choSetup, JanggiFormation hanSetup) {
         this.choSetup = choSetup;
         this.hanSetup = hanSetup;
     }
@@ -111,8 +111,8 @@ public class BoardFactory {
         setup(boardStatus, hanSetup, Team.HAN, HAN_BACK_RANK_Y);
     }
 
-    private void setup(BoardStatus boardStatus, NormalSetup setup, Team team, int y) {
-        if (setup == NormalSetup.EHEH_LAYOUT) {
+    private void setup(BoardStatus boardStatus, JanggiFormation setup, Team team, int y) {
+        if (setup == JanggiFormation.EHEH) {
             setupPiece(boardStatus, y, team, 1, new Elephant(team));
             setupPiece(boardStatus, y, team, 2, new Horse(team));
             setupPiece(boardStatus, y, team, 6, new Elephant(team));
@@ -120,7 +120,7 @@ public class BoardFactory {
             return;
         }
 
-        if (setup == NormalSetup.HEHE_LAYOUT) {
+        if (setup == JanggiFormation.HEHE) {
             setupPiece(boardStatus, y, team, 1, new Horse(team));
             setupPiece(boardStatus, y, team, 2, new Elephant(team));
             setupPiece(boardStatus, y, team, 6, new Horse(team));
@@ -128,7 +128,7 @@ public class BoardFactory {
             return;
         }
 
-        if (setup == NormalSetup.EHHE_LAYOUT) {
+        if (setup == JanggiFormation.EHHE) {
             setupPiece(boardStatus, y, team, 1, new Horse(team));
             setupPiece(boardStatus, y, team, 2, new Elephant(team));
             setupPiece(boardStatus, y, team, 6, new Elephant(team));
@@ -136,7 +136,7 @@ public class BoardFactory {
             return;
         }
 
-        if (setup == NormalSetup.HEEH_LAYOUT) {
+        if (setup == JanggiFormation.HEEH) {
             setupPiece(boardStatus, y, team, 1, new Elephant(team));
             setupPiece(boardStatus, y, team, 2, new Horse(team));
             setupPiece(boardStatus, y, team, 6, new Horse(team));
