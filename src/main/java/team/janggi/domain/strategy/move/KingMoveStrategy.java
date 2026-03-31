@@ -7,8 +7,13 @@ import team.janggi.domain.piece.Piece;
 public class KingMoveStrategy implements MoveStrategy {
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    public static final KingMoveStrategy instance = new KingMoveStrategy();
+    public static final KingMoveStrategy INSTANCE = new KingMoveStrategy();
 
+    private KingMoveStrategy() {}
+
+    public static KingMoveStrategy getInstance() {
+        return INSTANCE;
+    }
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
         return validateDirection(from, to) && !validateObstacle(from, to, mapStatus);

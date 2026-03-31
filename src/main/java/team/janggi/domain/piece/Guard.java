@@ -6,6 +6,6 @@ import team.janggi.domain.strategy.move.GuardMoveStrategy;
 public class Guard extends Piece {
 
     public Guard(Team team) {
-        super(team, PieceType.GUARD, GuardMoveStrategy.instance);
+        super(team, PieceType.GUARD, GuardMoveStrategy.getInstance());
     }
 }

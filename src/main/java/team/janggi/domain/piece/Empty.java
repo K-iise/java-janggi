@@ -7,6 +7,6 @@ public class Empty extends Piece {
     public static final Empty instance = new Empty(Team.NONE);
 
     private Empty(Team team) {
-        super(team, PieceType.EMPTY, EmptyMoveStrategy.instance);
+        super(team, PieceType.EMPTY, EmptyMoveStrategy.getInstance());
     }
 }

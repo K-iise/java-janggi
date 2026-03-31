@@ -9,7 +9,13 @@ import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;
 
 public class CannonMoveStrategy implements MoveStrategy {
-    public static final CannonMoveStrategy instance = new CannonMoveStrategy();
+    public static final CannonMoveStrategy INSTANCE = new CannonMoveStrategy();
+
+    private CannonMoveStrategy() {}
+
+    public static CannonMoveStrategy getInstance(){
+        return INSTANCE;
+    }
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {

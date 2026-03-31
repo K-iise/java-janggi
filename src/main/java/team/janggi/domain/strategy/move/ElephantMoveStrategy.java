@@ -8,7 +8,13 @@ import team.janggi.domain.piece.PieceType;
 
 public class ElephantMoveStrategy implements MoveStrategy {
 
-    public static final ElephantMoveStrategy instance = new ElephantMoveStrategy();
+    public static final ElephantMoveStrategy INSTANCE = new ElephantMoveStrategy();
+
+    private ElephantMoveStrategy() {}
+
+    public static ElephantMoveStrategy getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {

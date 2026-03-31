@@ -7,7 +7,13 @@ import team.janggi.domain.piece.Piece;
 public class GuardMoveStrategy implements MoveStrategy {
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    public static final GuardMoveStrategy instance = new GuardMoveStrategy();
+    public static final GuardMoveStrategy INSTANCE = new GuardMoveStrategy();
+
+    private GuardMoveStrategy() {}
+
+    public static GuardMoveStrategy getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {

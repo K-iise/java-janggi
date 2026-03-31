@@ -6,6 +6,6 @@ import team.janggi.domain.strategy.move.CannonMoveStrategy;
 public class Cannon extends Piece {
 
     public Cannon(Team team) {
-        super(team, PieceType.CANNON, CannonMoveStrategy.instance);
+        super(team, PieceType.CANNON, CannonMoveStrategy.getInstance());
     }
 }

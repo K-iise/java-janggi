@@ -6,7 +6,7 @@ import team.janggi.domain.strategy.move.ChariotMoveStrategy;
 public class Chariot extends Piece {
 
     public Chariot(Team team) {
-        super(team, PieceType.CHARIOT, ChariotMoveStrategy.instance);
+        super(team, PieceType.CHARIOT, ChariotMoveStrategy.getInstance());
     }
 
 }

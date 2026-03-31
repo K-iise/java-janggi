@@ -6,6 +6,6 @@ import team.janggi.domain.strategy.move.HorseMoveStrategy;
 public class Horse extends Piece {
 
     public Horse(Team team) {
-        super(team, PieceType.HORSE, HorseMoveStrategy.instance);
+        super(team, PieceType.HORSE, HorseMoveStrategy.getInstance());
     }
 }
