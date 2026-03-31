@@ -4,8 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
-import team.janggi.domain.strategy.move.EmptyMoveStrategy;
-import team.janggi.domain.strategy.move.MoveStrategy;
+import team.janggi.domain.movestrategy.MoveStrategy;
 
 public class Piece {
     private Team team;

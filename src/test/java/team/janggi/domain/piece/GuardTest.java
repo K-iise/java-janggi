@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import team.janggi.domain.EmptyBoardFactory;
 import team.janggi.domain.board.BoardStatus;
-import team.janggi.domain.EmptyLayoutStrategy;
-import team.janggi.domain.LocalMemoryBoardStatus;
+import team.janggi.domain.board.LocalMemoryBoardStatus;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
-import team.janggi.domain.board.BoardFactory;
+import team.janggi.domain.NormalSetup;
 
 public class GuardTest {
 
@@ -17,8 +17,8 @@ public class GuardTest {
 
     @BeforeEach
     void setUp() {
-        new BoardFactory(EmptyLayoutStrategy.instance).initBoardStatus(boardStatus);
-    }
+        new EmptyBoardFactory(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT).initBoardStatus(boardStatus);
+   }
 
     @ParameterizedTest
     @CsvSource({

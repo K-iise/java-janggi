@@ -8,11 +8,10 @@ import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;
 
 public class ConsoleOutputView {
-    private static final int ROW_SIZE = 10;
-    private static final int COLUMN_SIZE = 9;
+    private static final int Y_SIZE = 10;
+    private static final int X_SIZE = 9;
     private static final String SPACE = " ";
     private static final String HEADER_LEFT_PADDING = "   ";
-    private static final String EMPTY_TEXT = "";
     private static final String EMPTY_SYMBOL = "．";
     private static final String UNKNOWN_SYMBOL = "？";
     private static final String ANSI_RESET = "\u001B[0m";
@@ -21,25 +20,30 @@ public class ConsoleOutputView {
 
     public void print(Board board) {
         final Map<Position, Piece> status = board.getStatus();
-        final int totalCellCount = ROW_SIZE * COLUMN_SIZE;
 
         printColumnHeader();
-        for (int index = 0; index < totalCellCount; index++) {
-            int row = index / COLUMN_SIZE;
-            int col = index % COLUMN_SIZE;
-            printText(rowPrefix(row, col));
 
-            Piece piece = status.get(new Position(row, col));
-            String cellText = toSymbol(piece);
-            printText(applyTeamColor(piece, cellText) + SPACE);
-            printText(rowSuffix(col));
+        for (int y = 0; y < Y_SIZE; y++) {
+            printRow(status, y);
         }
+        printLine();
     }
 
     private void printColumnHeader() {
         printText(HEADER_LEFT_PADDING);
-        for (int col = 0; col < COLUMN_SIZE; col++) {
+        for (int col = 0; col < X_SIZE; col++) {
             printText(toFullWidthDigit(col) + SPACE);
+        }
+        printLine();
+    }
+
+    private void printRow(Map<Position, Piece> status, int y) {
+        printText(String.format("%2d%s", y, SPACE));
+
+        for (int x = 0; x < X_SIZE; x++) {
+            Piece piece = status.get(new Position(x, y));
+            String symbol = toSymbol(piece);
+            printText(applyTeamColor(piece, symbol) + SPACE);
         }
         printLine();
     }
@@ -48,7 +52,6 @@ public class ConsoleOutputView {
         if (piece == null || piece.isSamePieceType(PieceType.EMPTY)) {
             return EMPTY_SYMBOL;
         }
-
         return pieceCode(piece);
     }
 
@@ -85,22 +88,6 @@ public class ConsoleOutputView {
         return String.valueOf((char) ('０' + value));
     }
 
-    private String rowPrefix(int row, int col) {
-        if (col == 0) {
-            return String.format("%2d%s", row, SPACE);
-        }
-
-        return EMPTY_TEXT;
-    }
-
-    private String rowSuffix(int col) {
-        if (col == COLUMN_SIZE - 1) {
-            return System.lineSeparator();
-        }
-
-        return EMPTY_TEXT;
-    }
-
     private void printText(String text) {
         System.out.print(text);
     }
@@ -108,5 +95,4 @@ public class ConsoleOutputView {
     private void printLine() {
         System.out.println();
     }
-
 }

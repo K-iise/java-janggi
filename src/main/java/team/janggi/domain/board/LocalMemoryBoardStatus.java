@@ -1,8 +1,9 @@
-package team.janggi.domain;
+package team.janggi.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
-import team.janggi.domain.board.BoardStatus;
+import team.janggi.domain.Position;
+import team.janggi.domain.Team;
 import team.janggi.domain.piece.Empty;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;

@@ -1,4 +1,4 @@
-package team.janggi.domain.strategy.move;
+package team.janggi.domain.movestrategy;
 
 import java.util.List;
 import java.util.Map;

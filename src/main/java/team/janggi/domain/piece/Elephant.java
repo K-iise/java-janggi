@@ -1,7 +1,7 @@
 package team.janggi.domain.piece;
 
 import team.janggi.domain.Team;
-import team.janggi.domain.strategy.move.ElephantMoveStrategy;
+import team.janggi.domain.movestrategy.ElephantMoveStrategy;
 
 public class Elephant extends Piece {
 

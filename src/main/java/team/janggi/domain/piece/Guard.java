@@ -1,7 +1,7 @@
 package team.janggi.domain.piece;
 
 import team.janggi.domain.Team;
-import team.janggi.domain.strategy.move.GuardMoveStrategy;
+import team.janggi.domain.movestrategy.GuardMoveStrategy;
 
 public class Guard extends Piece {
 

@@ -1,4 +1,4 @@
-package team.janggi.domain.strategy.layout.normal;
+package team.janggi.domain;
 
 public enum NormalSetup {
     EHEH_LAYOUT,
