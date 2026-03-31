@@ -1,21 +1,19 @@
-package team.janggi.domain.strategy.boardstruct;
+package team.janggi.domain.board;
 
-import team.janggi.domain.BoardStatus;
 import team.janggi.domain.Position;
 import team.janggi.domain.piece.Empty;
 import team.janggi.domain.strategy.layout.normal.NormalLayoutStrategy;
 
-public class NormalBoardStrategy implements BoardStructStrategy {
+public class BoardFactory {
     private static final int NORMAL_BOARD_ROW_SIZE = 10;
     private static final int NORMAL_BOARD_COL_SIZE = 9;
 
     private final NormalLayoutStrategy layout;
 
-    public NormalBoardStrategy(NormalLayoutStrategy layout) {
+    public BoardFactory(NormalLayoutStrategy layout) {
         this.layout = layout;
     }
 
-    @Override
     public void initBoardStatus(BoardStatus status) {
         initMapByEmpty(status);
 

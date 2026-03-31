@@ -1,7 +1,7 @@
 package team.janggi.view;
 
 import java.util.Map;
-import team.janggi.domain.Board;
+import team.janggi.domain.board.Board;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.piece.Piece;

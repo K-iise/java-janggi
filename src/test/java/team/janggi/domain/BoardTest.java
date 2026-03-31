@@ -3,6 +3,7 @@ package team.janggi.domain;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import team.janggi.domain.board.Board;
 import team.janggi.domain.piece.Cannon;
 import team.janggi.domain.piece.Chariot;
 import team.janggi.domain.piece.Elephant;
@@ -11,7 +12,7 @@ import team.janggi.domain.piece.Horse;
 import team.janggi.domain.piece.King;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.Soldier;
-import team.janggi.domain.strategy.boardstruct.NormalBoardStrategy;
+import team.janggi.domain.board.BoardFactory;
 import team.janggi.domain.strategy.layout.normal.NormalLayoutStrategy;
 import team.janggi.domain.strategy.layout.normal.NormalSetup;
 
@@ -20,7 +21,7 @@ public class BoardTest {
     @Test
     void 기본_장기_보드_생성_테스트() {
         var layout = new NormalLayoutStrategy(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
-        var boardStruct = new NormalBoardStrategy(layout);
+        var boardStruct = new BoardFactory(layout);
 
         Board board = new Board(boardStruct);
         board.initBoard();
@@ -31,7 +32,7 @@ public class BoardTest {
     @Test
     void 기본_장기_배치_테스트() {
         var layout = new NormalLayoutStrategy(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT);
-        var boardStruct = new NormalBoardStrategy(layout);
+        var boardStruct = new BoardFactory(layout);
 
         Board board = new Board(boardStruct);
         board.initBoard();
@@ -95,7 +96,7 @@ public class BoardTest {
 
     private void runTest(NormalSetup choSetup, NormalSetup hanSetup) {
         var layout = new NormalLayoutStrategy(choSetup, hanSetup);
-        var boardStruct = new NormalBoardStrategy(layout);
+        var boardStruct = new BoardFactory(layout);
 
         Board board = new Board(boardStruct);
         board.initBoard();
@@ -156,7 +157,7 @@ public class BoardTest {
 
     @Test
     public void 기물_이동_테스트() {
-        var boardStruct = new NormalBoardStrategy(EmptyLayoutStrategy.instance);
+        var boardStruct = new BoardFactory(EmptyLayoutStrategy.instance);
         var boardStatus = new LocalMemoryBoardStatus();
         var board = new Board(boardStatus, boardStruct);
 

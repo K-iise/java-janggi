@@ -1,10 +1,10 @@
 package team.janggi.control;
 
 import java.util.Map;
-import team.janggi.domain.Board;
+import team.janggi.domain.board.Board;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
-import team.janggi.domain.strategy.boardstruct.NormalBoardStrategy;
+import team.janggi.domain.board.BoardFactory;
 import team.janggi.domain.strategy.layout.normal.NormalLayoutStrategy;
 import team.janggi.domain.strategy.layout.normal.NormalSetup;
 import team.janggi.view.ConsoleInputView;
@@ -34,7 +34,7 @@ public class JanggiController {
         final NormalSetup hanSetup = consoleInputView.readHanNormalSetup();
 
         final NormalLayoutStrategy layout = new NormalLayoutStrategy(choSetup, hanSetup);
-        final NormalBoardStrategy boardStructStrategy = new NormalBoardStrategy(layout);
+        final BoardFactory boardStructStrategy = new BoardFactory(layout);
         return new Board(boardStructStrategy);
     }
 

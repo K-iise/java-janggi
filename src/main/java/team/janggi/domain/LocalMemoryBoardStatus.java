@@ -2,6 +2,7 @@ package team.janggi.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import team.janggi.domain.board.BoardStatus;
 import team.janggi.domain.piece.Empty;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;

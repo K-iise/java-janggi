@@ -1,0 +1,34 @@
+package team.janggi.domain.board;
+
+import java.util.Map;
+import team.janggi.domain.LocalMemoryBoardStatus;
+import team.janggi.domain.Position;
+import team.janggi.domain.Team;
+import team.janggi.domain.piece.Piece;
+
+public class Board {
+    private final BoardStatus boardStatus;
+    private final BoardFactory boardFactory;
+
+    public Board(BoardFactory boardFactory) {
+        this(new LocalMemoryBoardStatus(), boardFactory);
+    }
+
+    public Board(BoardStatus boardStatus, BoardFactory boardFactory) {
+        this.boardStatus = boardStatus;
+        this.boardFactory = boardFactory;
+    }
+
+    public void initBoard() {
+        boardFactory.initBoardStatus(boardStatus);
+    }
+
+    public Map<Position, Piece> getStatus() {
+        return boardStatus.getBoardStatus();
+    }
+
+    public void move(Team team, Position from, Position to) {
+        boardStatus.movePiece(team, from, to);
+    }
+
+}
