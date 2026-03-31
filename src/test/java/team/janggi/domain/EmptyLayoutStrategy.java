@@ -1,5 +1,6 @@
 package team.janggi.domain;
 
+import team.janggi.domain.board.BoardStatus;
 import team.janggi.domain.strategy.layout.normal.NormalLayoutStrategy;
 import team.janggi.domain.strategy.layout.normal.NormalSetup;
 

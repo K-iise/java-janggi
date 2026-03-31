@@ -1,6 +1,6 @@
 package team.janggi.domain.strategy.layout.normal;
 
-import team.janggi.domain.BoardStatus;
+import team.janggi.domain.board.BoardStatus;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.piece.Cannon;
