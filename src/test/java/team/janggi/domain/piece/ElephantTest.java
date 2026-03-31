@@ -70,7 +70,7 @@ public class ElephantTest {
             "5, 5, 3, 3",
             "5, 5, 7 ,7",
             "5, 5, 6, 6",
-            "5, 5, 10, 11"
+            "5, 5, 1, 7"
     })
     void 상은_정해진_행마법_이외의_곳으로는_이동할_수_없다(int startX, int startY, int endX, int endY){
         Piece elephant = new Elephant(Team.CHO);
