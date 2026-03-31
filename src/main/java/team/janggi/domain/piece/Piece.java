@@ -18,10 +18,6 @@ public class Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public Piece(PieceType pieceType) {
-        this(Team.NONE, pieceType, new EmptyMoveStrategy());
-    }
-
     public boolean canMove(Position from,
                            Position to,
                            Map<Position, Piece> mapStatus) {
