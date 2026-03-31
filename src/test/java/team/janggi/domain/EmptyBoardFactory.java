@@ -6,8 +6,8 @@ import team.janggi.domain.board.BoardStatus;
 public class EmptyBoardFactory extends BoardFactory {
 
 
-    public EmptyBoardFactory(NormalSetup choSetup,
-                             NormalSetup hanSetup) {
+    public EmptyBoardFactory(JanggiFormation choSetup,
+                             JanggiFormation hanSetup) {
         super(choSetup, hanSetup);
     }
 

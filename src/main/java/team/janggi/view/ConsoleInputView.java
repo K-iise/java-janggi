@@ -1,17 +1,23 @@
 package team.janggi.view;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
-import team.janggi.domain.NormalSetup;
+import team.janggi.domain.JanggiFormation;
+import team.janggi.util.Parser;
 
 public class ConsoleInputView {
     private static final int Y_COUNT = 10; // 행(Row)
     private static final int X_COUNT = 9;  // 열(Col)
     private static final int SETUP_CHOICE_MIN = 1;
 
-    private static final String TITLE_CHO_NORMAL_SETUP = "초나라 상차림을 선택하세요.";
-    private static final String TITLE_HAN_NORMAL_SETUP = "한나라 상차림을 선택하세요.";
+    private static final String TITLE_CHO_FORMATION_SETUP = "초나라 상차림을 선택하세요.";
+    private static final String TITLE_HAN_FORMATION_SETUP = "한나라 상차림을 선택하세요.";
+
+    private static final String INVALID_SETUP_CHOICE_MESSAGE =
+            SETUP_CHOICE_MIN + "부터 " + JanggiFormation.values().length + "까지의 숫자를 입력하세요.";
+    private static final String SELECT_SETUP_CHOICE_MESSAGE = "선택 (" + SETUP_CHOICE_MIN + "-" + JanggiFormation.values().length + "): ";
 
     private static final String PROMPT_MOVE_SOURCE_SUFFIX = "움직일 기물 좌표 (x y): ";
     private static final String PROMPT_MOVE_DESTINATION_SUFFIX = "도착 좌표 (x y): ";
@@ -19,17 +25,29 @@ public class ConsoleInputView {
     private static final String INVALID_COORDINATE_MESSAGE =
             String.format("가로(0~%d), 세로(0~%d) 형식으로 공백을 넣어 입력하세요. (예: 0 6)", X_COUNT - 1, Y_COUNT - 1);
 
-    private static final String INVALID_SETUP_CHOICE_MESSAGE =
-            SETUP_CHOICE_MIN + "부터 " + NormalSetup.values().length + "까지의 숫자를 입력하세요.";
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public NormalSetup readChoNormalSetup() {
-        return readNormalSetup(TITLE_CHO_NORMAL_SETUP);
+    public int readChoFormation() {
+        printLine(TITLE_CHO_FORMATION_SETUP);
+        printLine(INVALID_SETUP_CHOICE_MESSAGE);
+        printSetup();
+        printText(SELECT_SETUP_CHOICE_MESSAGE);
+        return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 상차림 번호는 숫자만 입력해주세요.");
     }
 
-    public NormalSetup readHanNormalSetup() {
-        return readNormalSetup(TITLE_HAN_NORMAL_SETUP);
+    public int readHanFormation() {
+        printLine(TITLE_HAN_FORMATION_SETUP);
+        printLine(INVALID_SETUP_CHOICE_MESSAGE);
+        printSetup();
+        printText(SELECT_SETUP_CHOICE_MESSAGE);
+        return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 상차림 번호는 숫자만 입력해주세요.");
+    }
+
+    private void printSetup() {
+        Arrays.stream(JanggiFormation.values()).forEach(
+                setup -> printLine(setup.getNumber() + ". " + setup.getName())
+        );
     }
 
     public Position readMoveSource(Team currentTurn) {
@@ -60,36 +78,6 @@ public class ConsoleInputView {
         }
     }
 
-    private NormalSetup readNormalSetup(String titleLine) {
-        final NormalSetup[] setups = NormalSetup.values();
-        NormalSetup readNormalSetup = null;
-        do {
-            printLine(titleLine);
-            printSetup(setups);
-            readNormalSetup = parseNormalSetup(setups);
-        } while (readNormalSetup == null);
-
-        return readNormalSetup;
-    }
-
-    private NormalSetup parseNormalSetup(NormalSetup[] setups) {
-        printText("선택 (" + SETUP_CHOICE_MIN + "-" + setups.length + "): ");
-        try {
-            int setupChoice = Integer.parseInt(scanner.nextLine().trim());
-            if (setupChoice >= SETUP_CHOICE_MIN && setupChoice <= setups.length) {
-                return setups[setupChoice - SETUP_CHOICE_MIN];
-            }
-        } catch (NumberFormatException ignored) {
-        }
-        printLine(INVALID_SETUP_CHOICE_MESSAGE);
-        return null;
-    }
-
-    private void printSetup(NormalSetup[] setups) {
-        for (int i = 0; i < setups.length; i++) {
-            printLine((i + SETUP_CHOICE_MIN) + ". " + setups[i].name());
-        }
-    }
 
     private Position tryParsePosition(String line) {
         final String[] parts = line.split("\\s+");

@@ -9,7 +9,7 @@ import team.janggi.domain.board.BoardStatus;
 import team.janggi.domain.board.LocalMemoryBoardStatus;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
-import team.janggi.domain.NormalSetup;
+import team.janggi.domain.JanggiFormation;
 
 public class CannonTest {
 
@@ -17,7 +17,7 @@ public class CannonTest {
 
     @BeforeEach
     void setUp() {
-        new EmptyBoardFactory(NormalSetup.HEEH_LAYOUT, NormalSetup.HEEH_LAYOUT).initBoardStatus(boardStatus);
+        new EmptyBoardFactory(JanggiFormation.HEEH, JanggiFormation.HEEH).initBoardStatus(boardStatus);
     }
 
     @ParameterizedTest

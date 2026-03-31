@@ -5,7 +5,7 @@ import team.janggi.domain.board.Board;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.board.BoardFactory;
-import team.janggi.domain.NormalSetup;
+import team.janggi.domain.JanggiFormation;
 import team.janggi.view.ConsoleInputView;
 import team.janggi.view.ConsoleOutputView;
 
@@ -29,11 +29,34 @@ public class JanggiController {
     }
 
     private Board createBoard() {
-        final NormalSetup choSetup = consoleInputView.readChoNormalSetup();
-        final NormalSetup hanSetup = consoleInputView.readHanNormalSetup();
+        final JanggiFormation choSetup = getChoFormation();
+        final JanggiFormation hanSetup = getHanFormation();
 
         final BoardFactory boardFactory = new BoardFactory(choSetup, hanSetup);
         return new Board(boardFactory);
+    }
+
+    private JanggiFormation getChoFormation() {
+        while (true) {
+            try {
+                int choNumber = consoleInputView.readChoFormation();
+                return JanggiFormation.from(choNumber);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+
+    private JanggiFormation getHanFormation() {
+        while (true) {
+            try {
+                int hanNumber = consoleInputView.readHanFormation();
+                return JanggiFormation.from(hanNumber);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     private Team doTurn(Board board, Team currentTurn) {
