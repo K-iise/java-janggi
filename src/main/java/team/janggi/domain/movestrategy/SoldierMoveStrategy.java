@@ -18,11 +18,11 @@ public class SoldierMoveStrategy implements MoveStrategy {
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
         Piece soldier = mapStatus.get(from);
         if (soldier.isSameTeam(Team.CHO)) {
-            return canChoForward(from, to) || canSideMove(from, to);
+            return (canChoForward(from, to) || canSideMove(from, to)) && !validateObstacle(from, to, mapStatus);
         }
         
         if (soldier.isSameTeam(Team.HAN)) {
-            return canHanForward(from, to) || canSideMove(from, to);
+            return (canHanForward(from, to) || canSideMove(from, to)) && !validateObstacle(from, to, mapStatus);
         }
 
         return false;
@@ -38,5 +38,11 @@ public class SoldierMoveStrategy implements MoveStrategy {
 
     private boolean canSideMove(Position from, Position to) {
         return from.y() == to.y() && Math.abs(from.x() - to.x()) == 1;
+    }
+
+    private boolean validateObstacle(Position from, Position to, Map<Position, Piece> mapStatus) {
+        Piece toPiece = mapStatus.get(to);
+        Piece fromPiece = mapStatus.get(from);
+        return toPiece.isSameTeam(fromPiece);
     }
 }

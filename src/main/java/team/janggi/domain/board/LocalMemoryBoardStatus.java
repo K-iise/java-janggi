@@ -23,7 +23,7 @@ public class LocalMemoryBoardStatus implements BoardStatus {
         final Piece piece = getPiece(from);
 
         if (!piece.canMove(from, to, getBoardStatus())) {
-            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
         }
 
         map.put(to, piece);
@@ -53,17 +53,17 @@ public class LocalMemoryBoardStatus implements BoardStatus {
         final Piece piece = getPiece(from);
 
         if (!piece.isSameTeam(team)) {
-            throw new IllegalArgumentException("자신의 기물만 이동할 수 있습니다.");
+            throw new IllegalArgumentException("[ERROR] 자신의 기물만 이동할 수 있습니다.");
         }
     }
 
     private void validatePosition(Position from, Position to) {
         if (isOutOfBounds(from) || isOutOfBounds(to)) {
-            throw new IllegalArgumentException("위치가 보드 범위를 벗어났습니다.");
+            throw new IllegalArgumentException("[ERROR] 위치가 보드 범위를 벗어났습니다.");
         }
 
         if (isEmptySpace(from)) {
-            throw new IllegalArgumentException("이동할 위치에 기물이 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 이동할 위치에 기물이 없습니다.");
         }
     }
 
