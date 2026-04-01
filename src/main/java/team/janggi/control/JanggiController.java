@@ -1,5 +1,6 @@
 package team.janggi.control;
 
+import java.util.List;
 import java.util.Map;
 import team.janggi.domain.board.Board;
 import team.janggi.domain.Position;
@@ -61,8 +62,8 @@ public class JanggiController {
 
     private Team doTurn(Board board, Team currentTurn) {
         consoleOutputView.print(board);
-        final Position from = consoleInputView.readMoveSource(currentTurn);
-        final Position to = consoleInputView.readMoveDestination(currentTurn);
+        final Position from = getSourcePosition(currentTurn);
+        final Position to = getDestinationPosition(currentTurn);
 
         try {
             board.move(currentTurn, from, to);
@@ -70,6 +71,28 @@ public class JanggiController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return currentTurn;
+        }
+    }
+
+    private Position getSourcePosition(Team currentTurn) {
+        while (true) {
+            try {
+                List<Integer> sourcePosition = consoleInputView.readSourcePosition(currentTurn);
+                return Position.of(sourcePosition.get(0), sourcePosition.get(1));
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private Position getDestinationPosition(Team currentTurn) {
+        while (true) {
+            try {
+                List<Integer> destinationPosition = consoleInputView.readDestinationPosition(currentTurn);
+                return Position.of(destinationPosition.get(0), destinationPosition.get(1));
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
