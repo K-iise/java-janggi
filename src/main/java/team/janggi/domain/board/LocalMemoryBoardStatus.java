@@ -1,5 +1,6 @@
 package team.janggi.domain.board;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import team.janggi.domain.Position;
@@ -36,7 +37,7 @@ public class LocalMemoryBoardStatus implements BoardStatus {
 
     @Override
     public Map<Position, Piece> getBoardStatus() {
-        return new HashMap<>(map);
+        return Map.copyOf(map);
     }
 
     private Piece getPiece(Position position) {
