@@ -1,9 +1,9 @@
 package team.janggi.view;
 
 import java.util.Map;
-import team.janggi.domain.board.Board;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
+import team.janggi.domain.board.Board;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;
 
@@ -20,7 +20,7 @@ public class ConsoleOutputView {
 
     public void print(Board board) {
         final Map<Position, Piece> status = board.getStatus();
-
+        
         printColumnHeader();
 
         for (int y = 0; y < Y_SIZE; y++) {

@@ -9,8 +9,9 @@ public class GuardMoveStrategy implements MoveStrategy {
 
     public static final GuardMoveStrategy INSTANCE = new GuardMoveStrategy();
 
-    private GuardMoveStrategy() {}
-
+    private GuardMoveStrategy() {
+    }
+    
     public static GuardMoveStrategy getInstance() {
         return INSTANCE;
     }

@@ -10,8 +10,9 @@ public class ElephantMoveStrategy implements MoveStrategy {
 
     public static final ElephantMoveStrategy INSTANCE = new ElephantMoveStrategy();
 
-    private ElephantMoveStrategy() {}
-
+    private ElephantMoveStrategy() {
+    }
+    
     public static ElephantMoveStrategy getInstance() {
         return INSTANCE;
     }

@@ -8,8 +8,9 @@ import team.janggi.domain.piece.Piece;
 public class SoldierMoveStrategy implements MoveStrategy {
     public static final SoldierMoveStrategy INSTANCE = new SoldierMoveStrategy();
 
-    private SoldierMoveStrategy() {}
-
+    private SoldierMoveStrategy() {
+    }
+    
     public static SoldierMoveStrategy getInstance() {
         return INSTANCE;
     }
@@ -20,7 +21,7 @@ public class SoldierMoveStrategy implements MoveStrategy {
         if (soldier.isSameTeam(Team.CHO)) {
             return (canChoForward(from, to) || canSideMove(from, to)) && !validateObstacle(from, to, mapStatus);
         }
-        
+
         if (soldier.isSameTeam(Team.HAN)) {
             return (canHanForward(from, to) || canSideMove(from, to)) && !validateObstacle(from, to, mapStatus);
         }

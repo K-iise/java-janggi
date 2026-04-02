@@ -2,11 +2,11 @@ package team.janggi.control;
 
 import java.util.List;
 import java.util.Map;
-import team.janggi.domain.board.Board;
+import team.janggi.domain.JanggiFormation;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
+import team.janggi.domain.board.Board;
 import team.janggi.domain.board.BoardFactory;
-import team.janggi.domain.JanggiFormation;
 import team.janggi.view.ConsoleInputView;
 import team.janggi.view.ConsoleOutputView;
 
