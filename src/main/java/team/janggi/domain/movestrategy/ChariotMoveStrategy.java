@@ -10,8 +10,9 @@ import team.janggi.domain.piece.PieceType;
 public class ChariotMoveStrategy implements MoveStrategy {
 
     public static final ChariotMoveStrategy INSTANCE = new ChariotMoveStrategy();
-
-    private ChariotMoveStrategy() {}
+    
+    private ChariotMoveStrategy() {
+    }
 
     public static ChariotMoveStrategy getInstance() {
         return INSTANCE;
