@@ -9,7 +9,7 @@ import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;
 
 public class CannonMoveStrategy implements MoveStrategy {
-    public static final CannonMoveStrategy INSTANCE = new CannonMoveStrategy();
+    private static final CannonMoveStrategy INSTANCE = new CannonMoveStrategy();
 
     private CannonMoveStrategy() {
     }

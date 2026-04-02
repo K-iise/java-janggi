@@ -5,11 +5,11 @@ import team.janggi.domain.Position;
 import team.janggi.domain.piece.Piece;
 
 public class EmptyMoveStrategy implements MoveStrategy {
-    public static final EmptyMoveStrategy INSTANCE = new EmptyMoveStrategy();
+    private static final EmptyMoveStrategy INSTANCE = new EmptyMoveStrategy();
 
     private EmptyMoveStrategy() {
     }
-    
+
     public static EmptyMoveStrategy getInstance() {
         return INSTANCE;
     }
