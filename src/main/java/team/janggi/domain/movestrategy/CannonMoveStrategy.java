@@ -11,9 +11,10 @@ import team.janggi.domain.piece.PieceType;
 public class CannonMoveStrategy implements MoveStrategy {
     public static final CannonMoveStrategy INSTANCE = new CannonMoveStrategy();
 
-    private CannonMoveStrategy() {}
+    private CannonMoveStrategy() {
+    }
 
-    public static CannonMoveStrategy getInstance(){
+    public static CannonMoveStrategy getInstance() {
         return INSTANCE;
     }
 
