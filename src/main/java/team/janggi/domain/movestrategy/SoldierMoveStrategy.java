@@ -19,11 +19,14 @@ public class SoldierMoveStrategy implements MoveStrategy {
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
         Piece soldier = mapStatus.get(from);
         if (soldier.isSameTeam(Team.CHO)) {
-            return (canChoForward(from, to) || canSideMove(from, to)) && !validateObstacle(from, to, mapStatus);
+            return (canChoForward(from, to) || canSideMove(from, to) || canChoDiagonalMove(from, to))
+                    && !validateObstacle(from, to, mapStatus);
         }
 
         if (soldier.isSameTeam(Team.HAN)) {
-            return (canHanForward(from, to) || canSideMove(from, to)) && !validateObstacle(from, to, mapStatus);
+            return (canHanForward(from, to) || canSideMove(from, to) || canHanDiagonalMove(from, to))
+                    && !validateObstacle(
+                    from, to, mapStatus);
         }
 
         return false;
@@ -39,6 +42,32 @@ public class SoldierMoveStrategy implements MoveStrategy {
 
     private boolean canSideMove(Position from, Position to) {
         return from.y() == to.y() && Math.abs(from.x() - to.x()) == 1;
+    }
+
+    private boolean canChoDiagonalMove(Position from, Position to) {
+        if (from.x() == 3 && from.y() == 2 && to.x() == 4 && to.y() == 1) {
+            return true;
+        }
+        if (from.x() == 4 && from.y() == 1 && to.x() == 5 && to.y() == 0) {
+            return true;
+        }
+        if (from.x() == 5 && from.y() == 2 && to.x() == 4 && to.y() == 1) {
+            return true;
+        }
+        return from.x() == 4 && from.y() == 1 && to.x() == 3 && to.y() == 0;
+    }
+
+    private boolean canHanDiagonalMove(Position from, Position to) {
+        if (from.x() == 3 && from.y() == 7 && to.x() == 4 && to.y() == 8) {
+            return true;
+        }
+        if (from.x() == 5 && from.y() == 7 && to.x() == 4 && to.y() == 8) {
+            return true;
+        }
+        if (from.x() == 4 && from.y() == 8 && to.x() == 3 && to.y() == 9) {
+            return true;
+        }
+        return from.x() == 4 && from.y() == 8 && to.x() == 5 && to.y() == 9;
     }
 
     private boolean validateObstacle(Position from, Position to, Map<Position, Piece> mapStatus) {
