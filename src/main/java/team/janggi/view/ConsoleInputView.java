@@ -3,8 +3,8 @@ package team.janggi.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import team.janggi.domain.Team;
 import team.janggi.domain.JanggiFormation;
+import team.janggi.domain.Team;
 import team.janggi.util.Parser;
 
 public class ConsoleInputView {
@@ -17,13 +17,14 @@ public class ConsoleInputView {
 
     private static final String INVALID_SETUP_CHOICE_MESSAGE =
             SETUP_CHOICE_MIN + "부터 " + JanggiFormation.values().length + "까지의 숫자를 입력하세요.";
-    private static final String SELECT_SETUP_CHOICE_MESSAGE = "선택 (" + SETUP_CHOICE_MIN + "-" + JanggiFormation.values().length + "): ";
+    private static final String SELECT_SETUP_CHOICE_MESSAGE =
+            "선택 (" + SETUP_CHOICE_MIN + "-" + JanggiFormation.values().length + "): ";
 
     private static final String PROMPT_MOVE_SOURCE_SUFFIX = "움직일 기물 좌표 (x y): ";
     private static final String PROMPT_MOVE_DESTINATION_SUFFIX = "도착 좌표 (x y): ";
 
     private static final String INVALID_COORDINATE_MESSAGE =
-            String.format("가로(0~%d), 세로(0~%d) 형식으로 공백을 넣어 입력하세요. (예: 0 6)", X_COUNT, Y_COUNT );
+            String.format("가로(0~%d), 세로(0~%d) 형식으로 공백을 넣어 입력하세요. (예: 0 6)", X_COUNT, Y_COUNT);
 
 
     private final Scanner scanner = new Scanner(System.in);
