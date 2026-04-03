@@ -44,30 +44,24 @@ public class SoldierMoveStrategy implements MoveStrategy {
         return from.y() == to.y() && Math.abs(from.x() - to.x()) == 1;
     }
 
+    private boolean isDiagonalMove(Position from, Position to) {
+        return Math.abs(from.x() - to.x()) == 1 && Math.abs(from.y() - to.y()) == 1;
+    }
+
+    private boolean isChoPalaceCenter(Position center) {
+        return center.x() == 4 && center.y() == 8;
+    }
+
+    private boolean isHanPalaceCenter(Position center) {
+        return center.x() == 4 && center.y() == 1;
+    }
+
     private boolean canChoDiagonalMove(Position from, Position to) {
-        if (from.x() == 3 && from.y() == 2 && to.x() == 4 && to.y() == 1) {
-            return true;
-        }
-        if (from.x() == 4 && from.y() == 1 && to.x() == 5 && to.y() == 0) {
-            return true;
-        }
-        if (from.x() == 5 && from.y() == 2 && to.x() == 4 && to.y() == 1) {
-            return true;
-        }
-        return from.x() == 4 && from.y() == 1 && to.x() == 3 && to.y() == 0;
+        return isDiagonalMove(from, to) && (isHanPalaceCenter(from) || isHanPalaceCenter(to)) && to.y() < from.y();
     }
 
     private boolean canHanDiagonalMove(Position from, Position to) {
-        if (from.x() == 3 && from.y() == 7 && to.x() == 4 && to.y() == 8) {
-            return true;
-        }
-        if (from.x() == 5 && from.y() == 7 && to.x() == 4 && to.y() == 8) {
-            return true;
-        }
-        if (from.x() == 4 && from.y() == 8 && to.x() == 3 && to.y() == 9) {
-            return true;
-        }
-        return from.x() == 4 && from.y() == 8 && to.x() == 5 && to.y() == 9;
+        return isDiagonalMove(from, to) && (isChoPalaceCenter(from) || isChoPalaceCenter(to)) && to.y() > from.y();
     }
 
     private boolean validateObstacle(Position from, Position to, Map<Position, Piece> mapStatus) {

@@ -174,4 +174,67 @@ public class SoldierTest {
         // then
         Assertions.assertTrue(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "3, 2, 5, 0",
+            "5, 2, 3, 0",
+            "3, 2, 3, 0",
+            "5, 2, 5, 0"
+    })
+    void 초의_졸은_한의_궁성영역_에서_두칸_대각선_이동할_수_없다(int startX, int startY, int endX, int endY) {
+        // given
+        Piece solider = new Soldier(Team.CHO);
+        Position startPosition = new Position(startX, startY);
+        Position endPosition = new Position(endX, endY);
+        boardStatus.setPiece(startPosition, solider);
+
+        // when
+        boolean expected = solider.canMove(startPosition, endPosition, boardStatus.getBoardStatus());
+
+        // then
+        Assertions.assertFalse(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "4, 1, 3, 2",
+            "4, 1, 5, 2",
+            "3, 0, 4, 1",
+            "5, 0, 4, 1"
+    })
+    void 초의_졸은_한의_궁성영역에서_대각선_후퇴_할_수_없다(int startX, int startY, int endX, int endY) {
+        // given
+        Piece solider = new Soldier(Team.CHO);
+        Position startPosition = new Position(startX, startY);
+        Position endPosition = new Position(endX, endY);
+        boardStatus.setPiece(startPosition, solider);
+
+        // when
+        boolean expected = solider.canMove(startPosition, endPosition, boardStatus.getBoardStatus());
+
+        // then
+        Assertions.assertFalse(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "4, 8, 3, 7",
+            "4, 8, 5, 7",
+            "3, 9, 4, 8",
+            "5, 9, 4, 8"
+    })
+    void 한의_졸은_초의_궁성영역에서_대각선_후퇴_할_수_없다(int startX, int startY, int endX, int endY) {
+        // given
+        Piece solider = new Soldier(Team.CHO);
+        Position startPosition = new Position(startX, startY);
+        Position endPosition = new Position(endX, endY);
+        boardStatus.setPiece(startPosition, solider);
+
+        // when
+        boolean expected = solider.canMove(startPosition, endPosition, boardStatus.getBoardStatus());
+
+        // then
+        Assertions.assertFalse(expected);
+    }
 }
