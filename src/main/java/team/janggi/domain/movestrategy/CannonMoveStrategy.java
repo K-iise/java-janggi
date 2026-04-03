@@ -20,6 +20,17 @@ public class CannonMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
+        final Piece me = mapStatus.get(from);
+        final Piece lastPiece = mapStatus.get(to);
+
+        if (!canKill(me, lastPiece)) {
+            return false;
+        }
+
+        if (isDiagonalJumpDirection(from, to, mapStatus)) {
+            return true;
+        }
+
         if (!isAllowDirection(from, to)) {
             return false;
         }
@@ -30,9 +41,28 @@ public class CannonMoveStrategy implements MoveStrategy {
             return false;
         }
 
-        final Piece me = mapStatus.get(from);
-        final Piece lastPiece = mapStatus.get(to);
-        return canKill(lastPiece, me);
+        return true;
+
+    }
+
+    private boolean isDiagonalJumpDirection(Position from, Position to, Map<Position, Piece> mapStatus) {
+        List<Position> choDiagonalLeft = List.of(Position.of(3, 7), Position.of(5, 9));
+        List<Position> choDiagonalRight = List.of(Position.of(5, 7), Position.of(3, 9));
+
+        List<Position> hanDiagonalLeft = List.of(Position.of(3, 0), Position.of(5, 2));
+        List<Position> hanDiagonalRight = List.of(Position.of(5, 0), Position.of(3, 2));
+
+        if (isJumpAblePiece(mapStatus.get(Position.of(4, 8)))) {
+            return containDirection(choDiagonalLeft, from, to) || containDirection(choDiagonalRight, from, to);
+        }
+        if (isJumpAblePiece(mapStatus.get(Position.of(4, 1)))) {
+            return containDirection(hanDiagonalLeft, from, to) || containDirection(hanDiagonalRight, from, to);
+        }
+        return false;
+    }
+
+    private boolean containDirection(List<Position> Diagonal, Position from, Position to) {
+        return Diagonal.contains(from) && Diagonal.contains(to);
     }
 
     private boolean canKill(Piece target, Piece me) {

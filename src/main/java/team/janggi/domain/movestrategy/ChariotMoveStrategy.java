@@ -19,6 +19,13 @@ public class ChariotMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean calculateMove(Position from, Position to, Map<Position, Piece> mapStatus) {
+        final Piece me = mapStatus.get(from);
+        final Piece lastPiece = mapStatus.get(to);
+        
+        if (!canKill(lastPiece, me)) {
+            return false;
+        }
+
         if (isDiagonalDirection(from, to)) {
             return true;
         }
@@ -33,9 +40,7 @@ public class ChariotMoveStrategy implements MoveStrategy {
             return false;
         }
 
-        final Piece me = mapStatus.get(from);
-        final Piece lastPiece = mapStatus.get(to);
-        return canKill(lastPiece, me);
+        return true;
     }
 
     private boolean isDiagonalDirection(Position from, Position to) {
