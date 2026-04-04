@@ -13,4 +13,5 @@ public interface BoardStatus {
 
     Map<Position, Piece> getBoardStatus();
 
+    boolean isKingDisappeared();
 }

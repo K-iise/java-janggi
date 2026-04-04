@@ -26,6 +26,11 @@ public class JanggiController {
         Team currentTurn = Team.CHO;
         while (true) {
             currentTurn = doTurn(board, currentTurn);
+
+            if (board.isKingDisappeared()) {
+                consoleOutputView.printWinner(currentTurn);
+                break;
+            }
         }
     }
 

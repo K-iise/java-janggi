@@ -20,13 +20,22 @@ public class ConsoleOutputView {
 
     public void print(Board board) {
         final Map<Position, Piece> status = board.getStatus();
-        
+
         printColumnHeader();
 
         for (int y = 0; y < Y_SIZE; y++) {
             printRow(status, y);
         }
         printLine();
+    }
+
+    public void printWinner(Team team) {
+        switch (team) {
+            case CHO -> printText("한나라 승리! 게임을 종료합니다.");
+            case HAN -> printText("초나라 승리! 게임을 종료합니다.");
+            default -> {
+            }
+        }
     }
 
     private void printColumnHeader() {

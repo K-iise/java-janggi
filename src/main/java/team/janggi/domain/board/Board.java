@@ -30,4 +30,8 @@ public class Board {
         boardStatus.movePiece(team, from, to);
     }
 
+    public boolean isKingDisappeared() {
+        return boardStatus.isKingDisappeared();
+    }
+
 }
