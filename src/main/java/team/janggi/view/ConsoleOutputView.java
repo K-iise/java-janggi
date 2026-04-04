@@ -21,6 +21,7 @@ public class ConsoleOutputView {
     public void print(Board board) {
         final Map<Position, Piece> status = board.getStatus();
 
+        printLine();
         printColumnHeader();
 
         for (int y = 0; y < Y_SIZE; y++) {
@@ -33,6 +34,15 @@ public class ConsoleOutputView {
         switch (team) {
             case CHO -> printText("한나라 승리! 게임을 종료합니다.");
             case HAN -> printText("초나라 승리! 게임을 종료합니다.");
+            default -> {
+            }
+        }
+    }
+
+    public void printScore(Team team, double teamScore) {
+        switch (team) {
+            case CHO -> printTextLine("초나라 기물 점수 : " + teamScore);
+            case HAN -> printTextLine("한나라 기물 점수 : " + teamScore);
             default -> {
             }
         }
@@ -99,6 +109,10 @@ public class ConsoleOutputView {
 
     private void printText(String text) {
         System.out.print(text);
+    }
+
+    private void printTextLine(String text) {
+        System.out.println(text);
     }
 
     private void printLine() {

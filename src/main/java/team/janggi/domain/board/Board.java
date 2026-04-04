@@ -34,4 +34,7 @@ public class Board {
         return boardStatus.isKingDisappeared();
     }
 
+    public double getScore(Team team) {
+        return boardStatus.getScore(team);
+    }
 }

@@ -41,13 +41,20 @@ public class LocalMemoryBoardStatus implements BoardStatus {
 
     @Override
     public boolean isKingDisappeared() {
-        int kingCount = 0;
-        for (Map.Entry<Position, Piece> entry : map.entrySet()) {
-            if (entry.getValue().isSamePieceType(PieceType.KING)) {
-                kingCount++;
-            }
-        }
+        long kingCount = map.values().stream()
+                .filter(piece -> piece.isSamePieceType(PieceType.KING))
+                .count();
+
         return kingCount != 2;
+    }
+
+    @Override
+    public double getScore(Team team) {
+        double pieceScore = map.values().stream()
+                .filter(piece -> piece.isSameTeam(team))
+                .mapToDouble(piece -> piece.getPieceType().getPieceScore())
+                .sum();
+        return pieceScore + team.getHandicap();
     }
 
     private Piece getPiece(Position position) {

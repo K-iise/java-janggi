@@ -25,6 +25,7 @@ public class JanggiController {
 
         Team currentTurn = Team.CHO;
         while (true) {
+            printCurrentScores(board);
             currentTurn = doTurn(board, currentTurn);
 
             if (board.isKingDisappeared()) {
@@ -32,6 +33,11 @@ public class JanggiController {
                 break;
             }
         }
+    }
+
+    private void printCurrentScores(Board board) {
+        consoleOutputView.printScore(Team.CHO, board.getScore(Team.CHO));
+        consoleOutputView.printScore(Team.HAN, board.getScore(Team.HAN));
     }
 
     private Board createBoard() {

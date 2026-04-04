@@ -203,4 +203,25 @@ public class BoardTest {
         // then
         Assertions.assertTrue(boardStatus.isKingDisappeared());
     }
+
+    @Test
+    public void 진영별_기물에_대한_점수를_반환한다() {
+        // given
+        BoardStatus boardStatus = new LocalMemoryBoardStatus();
+        BoardFactory boardFactory = new BoardFactory(JanggiFormation.HEEH, JanggiFormation.HEEH);
+        Board board = new Board(boardStatus, boardFactory);
+        board.initBoard();
+
+        // when
+
+        double choScore = board.getScore(Team.CHO);
+        double hanScore = board.getScore(Team.HAN);
+
+        double expectedChoScore = 72;
+        double expectedHanScore = 73.5;
+
+        // then
+        Assertions.assertEquals(expectedChoScore, choScore);
+        Assertions.assertEquals(expectedHanScore, hanScore);
+    }
 }
