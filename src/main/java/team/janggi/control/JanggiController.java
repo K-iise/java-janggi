@@ -7,6 +7,7 @@ import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.board.Board;
 import team.janggi.domain.board.BoardFactory;
+import team.janggi.entity.Game;
 import team.janggi.repository.BoardPieceRepository;
 import team.janggi.repository.GameRepository;
 import team.janggi.service.GameService;
@@ -26,6 +27,15 @@ public class JanggiController {
     }
 
     public void run() {
+        int option = consoleInputView.readStartOption();
+        if (option == 1) {
+            loadAndResumeGame();
+            return;
+        }
+        startNewGame();
+    }
+
+    public void startNewGame() {
         final Board board = createBoard();
         board.initBoard();
 
@@ -38,6 +48,17 @@ public class JanggiController {
                 consoleOutputView.printWinner(currentTurn);
                 break;
             }
+        }
+    }
+
+    private void loadAndResumeGame() {
+        List<Game> games = gameService.getGames();
+        consoleOutputView.printGames(games);
+
+        int selectedId = consoleInputView.readGameId(games.size());
+        if (selectedId == games.size() + 1) {
+            startNewGame();
+            return;
         }
     }
 

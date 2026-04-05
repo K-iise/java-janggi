@@ -1,11 +1,13 @@
 package team.janggi.view;
 
+import java.util.List;
 import java.util.Map;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.board.Board;
 import team.janggi.domain.piece.Piece;
 import team.janggi.domain.piece.PieceType;
+import team.janggi.entity.Game;
 
 public class ConsoleOutputView {
     private static final int Y_SIZE = 10;
@@ -46,6 +48,17 @@ public class ConsoleOutputView {
             default -> {
             }
         }
+    }
+
+    public void printGames(List<Game> games) {
+        if (games.isEmpty()) {
+            System.out.println("저장된 게임이 없습니다.");
+            return;
+        }
+        games.forEach(game ->
+                System.out.println(game.getId() + ". " + game.getGameName())
+        );
+        System.out.println((games.size() + 1) + ". 새 게임 시작하기");
     }
 
     private void printColumnHeader() {

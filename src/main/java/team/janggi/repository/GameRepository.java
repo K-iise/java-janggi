@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import team.janggi.entity.Game;
 
 public class GameRepository {
 
@@ -34,6 +37,31 @@ public class GameRepository {
                     throw new SQLException("게임 저장 중 ID를 가져오지 못했습니다.");
                 }
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Game> loadGame() {
+        try {
+            List<Game> loadGames = new ArrayList<>();
+            Connection connection = getConnection();
+            String sql = "SELECT * FROM game;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String gameName = resultSet.getString("game_name");
+                String currentTurn = resultSet.getString("current_turn");
+                loadGames.add(new Game(id, gameName, currentTurn));
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+            return loadGames;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

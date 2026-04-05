@@ -61,6 +61,23 @@ public class ConsoleInputView {
         return scanner.nextLine();
     }
 
+    public int readStartOption() {
+        System.out.println("1. 게임 불러오기");
+        System.out.println("2. 새 게임 시작하기");
+        System.out.print("선택: ");
+        return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 숫자를 입력해주세요.");
+    }
+
+    public int readGameId() {
+        System.out.print("불러올 게임 번호를 입력하세요: ");
+        return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 숫자를 입력해주세요.");
+    }
+
+    public int readGameId(int size) {
+        System.out.print("불러올 게임 번호를 입력하세요: ");
+        return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 숫자를 입력해주세요.");
+    }
+
     public List<Integer> readSourcePosition(Team currentTurn) {
         printText(turnPrefix(currentTurn) + PROMPT_MOVE_SOURCE_SUFFIX);
         return Parser.parseByDelimiter(scanner.nextLine(), "[ERROR] 좌표는 숫자 형식이어야 합니다.");
