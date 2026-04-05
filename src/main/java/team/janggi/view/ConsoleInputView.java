@@ -20,7 +20,7 @@ public class ConsoleInputView {
     private static final String SELECT_SETUP_CHOICE_MESSAGE =
             "선택 (" + SETUP_CHOICE_MIN + "-" + JanggiFormation.values().length + "): ";
 
-    private static final String PROMPT_MOVE_SOURCE_SUFFIX = "움직일 기물 좌표 (x y): ";
+    private static final String PROMPT_MOVE_SOURCE_SUFFIX = "움직일 기물 좌표 (x y) | 저장 시 (save): ";
     private static final String PROMPT_MOVE_DESTINATION_SUFFIX = "도착 좌표 (x y): ";
 
     private static final String INVALID_COORDINATE_MESSAGE =
@@ -49,6 +49,16 @@ public class ConsoleInputView {
         Arrays.stream(JanggiFormation.values()).forEach(
                 setup -> printLine(setup.getNumber() + ". " + setup.getName())
         );
+    }
+
+    public String readCommand(Team currentTeam) {
+        printText(turnPrefix(currentTeam) + PROMPT_MOVE_SOURCE_SUFFIX);
+        return scanner.nextLine();
+    }
+
+    public String readGameName() {
+        printText("게임을 저장합니다. 게임 이름을 입력해주세요: ");
+        return scanner.nextLine();
     }
 
     public List<Integer> readSourcePosition(Team currentTurn) {

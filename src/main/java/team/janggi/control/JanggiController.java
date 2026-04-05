@@ -7,16 +7,22 @@ import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.board.Board;
 import team.janggi.domain.board.BoardFactory;
+import team.janggi.repository.BoardPieceRepository;
+import team.janggi.repository.GameRepository;
+import team.janggi.service.GameService;
+import team.janggi.util.Parser;
 import team.janggi.view.ConsoleInputView;
 import team.janggi.view.ConsoleOutputView;
 
 public class JanggiController {
     private final ConsoleOutputView consoleOutputView;
     private final ConsoleInputView consoleInputView;
+    private final GameService gameService;
 
     public JanggiController() {
         this.consoleOutputView = new ConsoleOutputView();
         this.consoleInputView = new ConsoleInputView();
+        this.gameService = new GameService(new GameRepository(), new BoardPieceRepository());
     }
 
     public void run() {
@@ -73,10 +79,20 @@ public class JanggiController {
 
     private Team doTurn(Board board, Team currentTurn) {
         consoleOutputView.print(board);
-        final Position from = getSourcePosition(currentTurn);
-        final Position to = getDestinationPosition(currentTurn);
 
         try {
+            String input = consoleInputView.readCommand(currentTurn);
+
+            if (input.equals("save")) {
+                String gameName = consoleInputView.readGameName();
+                gameService.saveGame(gameName, currentTurn, board);
+                System.out.println(gameName + " 을 저장했습니다. 게임이 종료됩니다.");
+                System.exit(0);
+            }
+
+            final Position from = getSourcePosition(input);
+            final Position to = getDestinationPosition(currentTurn);
+
             board.move(currentTurn, from, to);
             return nextTeam(currentTurn);
         } catch (IllegalArgumentException e) {
@@ -85,11 +101,11 @@ public class JanggiController {
         }
     }
 
-    private Position getSourcePosition(Team currentTurn) {
+    private Position getSourcePosition(String input) {
         while (true) {
             try {
-                List<Integer> sourcePosition = consoleInputView.readSourcePosition(currentTurn);
-                return Position.of(sourcePosition.get(0), sourcePosition.get(1));
+                List<Integer> positions = Parser.parseByDelimiter(input, "[ERROR] 좌표는 숫자 형식이어야 합니다.");
+                return Position.of(positions.get(0), positions.get(1));
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
