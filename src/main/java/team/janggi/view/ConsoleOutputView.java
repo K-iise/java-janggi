@@ -61,6 +61,10 @@ public class ConsoleOutputView {
         System.out.println((games.size() + 1) + ". 새 게임 시작하기");
     }
 
+    public void printNoSavedGames() {
+        System.out.println("저장된 게임이 없어 새 게임을 시작합니다.");
+    }
+
     private void printColumnHeader() {
         printText(HEADER_LEFT_PADDING);
         for (int col = 0; col < X_SIZE; col++) {

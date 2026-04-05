@@ -15,6 +15,10 @@ public class LocalMemoryBoardStatus implements BoardStatus {
         this.map = new HashMap<>();
     }
 
+    public LocalMemoryBoardStatus(Map<Position, Piece> initialStatus) {
+        this.map = new HashMap<>(initialStatus);
+    }
+
     @Override
     public void movePiece(Team team, Position from, Position to) {
         validate(team, from, to);

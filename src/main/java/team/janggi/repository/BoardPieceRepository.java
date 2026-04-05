@@ -3,10 +3,15 @@ package team.janggi.repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import team.janggi.domain.Position;
+import team.janggi.domain.Team;
 import team.janggi.domain.piece.Piece;
+import team.janggi.domain.piece.PieceFactory;
+import team.janggi.domain.piece.PieceType;
 
 public class BoardPieceRepository {
     private final String URL = "jdbc:h2:file:./data/janggi;INIT=RUNSCRIPT FROM 'classpath:schema.sql'";
@@ -37,6 +42,40 @@ public class BoardPieceRepository {
 
             preparedStatement.executeBatch();
 
+            preparedStatement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Map<Position, Piece> loadBoardPiece(int gameId) {
+        Map<Position, Piece> boardPieceMap = new HashMap<>();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM board_piece WHERE game_id = ?");
+            statement.setInt(1, gameId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String type = resultSet.getString("type");
+                String team = resultSet.getString("team");
+                int x_position = resultSet.getInt("x_position");
+                int y_position = resultSet.getInt("y_position");
+
+                PieceType pieceType = PieceType.from(type);
+                Team teamType = Team.from(team);
+                Position position = new Position(x_position, y_position);
+                Piece piece = PieceFactory.createPiece(pieceType, teamType);
+                boardPieceMap.put(position, piece);
+
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+            return boardPieceMap;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

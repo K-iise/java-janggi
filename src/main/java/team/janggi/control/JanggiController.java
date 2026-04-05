@@ -40,6 +40,32 @@ public class JanggiController {
         board.initBoard();
 
         Team currentTurn = Team.CHO;
+        GameLoop(board, currentTurn);
+    }
+
+    private void loadAndResumeGame() {
+        List<Game> games = gameService.getGames();
+        consoleOutputView.printGames(games);
+
+        if (games.isEmpty()) {
+            consoleOutputView.printNoSavedGames();
+            startNewGame();
+            return;
+        }
+
+        int selectedId = getSelectedGameId(games);
+
+        if (selectedId == games.size() + 1) {
+            startNewGame();
+            return;
+        }
+
+        Board board = gameService.loadBoard(selectedId);
+        Team currentTurn = gameService.loadTurn(selectedId);
+        GameLoop(board, currentTurn);
+    }
+
+    private void GameLoop(Board board, Team currentTurn) {
         while (true) {
             printCurrentScores(board);
             currentTurn = doTurn(board, currentTurn);
@@ -51,14 +77,21 @@ public class JanggiController {
         }
     }
 
-    private void loadAndResumeGame() {
-        List<Game> games = gameService.getGames();
-        consoleOutputView.printGames(games);
-
-        int selectedId = consoleInputView.readGameId(games.size());
-        if (selectedId == games.size() + 1) {
-            startNewGame();
-            return;
+    private int getSelectedGameId(List<Game> games) {
+        while (true) {
+            try {
+                int selectedId = consoleInputView.readGameId();
+                if (selectedId == games.size() + 1) {
+                    return selectedId;
+                }
+                games.stream()
+                        .filter(game -> game.getId() == selectedId)
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 게임 번호입니다."));
+                return selectedId;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

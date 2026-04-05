@@ -64,16 +64,11 @@ public class ConsoleInputView {
     public int readStartOption() {
         System.out.println("1. 게임 불러오기");
         System.out.println("2. 새 게임 시작하기");
-        System.out.print("선택: ");
+        System.out.print("시작 옵션 선택: ");
         return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 숫자를 입력해주세요.");
     }
 
     public int readGameId() {
-        System.out.print("불러올 게임 번호를 입력하세요: ");
-        return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 숫자를 입력해주세요.");
-    }
-
-    public int readGameId(int size) {
         System.out.print("불러올 게임 번호를 입력하세요: ");
         return Parser.parseByInteger(scanner.nextLine(), "[ERROR] 숫자를 입력해주세요.");
     }

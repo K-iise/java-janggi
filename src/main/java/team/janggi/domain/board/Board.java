@@ -18,6 +18,10 @@ public class Board {
         this.boardFactory = boardFactory;
     }
 
+    public Board(Map<Position, Piece> boardPiece, BoardFactory boardFactory) {
+        this(new LocalMemoryBoardStatus(boardPiece), boardFactory);
+    }
+
     public void initBoard() {
         boardFactory.initBoardStatus(boardStatus);
     }

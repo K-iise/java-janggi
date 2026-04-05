@@ -67,5 +67,25 @@ public class GameRepository {
         }
     }
 
+    public Game findGameById(int gameId) {
+        try {
+            Connection connection = getConnection();
+            String sql = "SELECT * FROM game WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, gameId);
 
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int id = resultSet.getInt("id");
+            String gameName = resultSet.getString("game_name");
+            String currentTurn = resultSet.getString("current_turn");
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+            return new Game(id, gameName, currentTurn);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
