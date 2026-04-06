@@ -8,6 +8,7 @@ import team.janggi.domain.Team;
 import team.janggi.domain.board.Board;
 import team.janggi.domain.board.BoardFactory;
 import team.janggi.entity.Game;
+import team.janggi.infra.H2ConnectionManager;
 import team.janggi.repository.BoardPieceRepository;
 import team.janggi.repository.GameRepository;
 import team.janggi.service.GameService;
@@ -23,7 +24,7 @@ public class JanggiController {
     public JanggiController() {
         this.consoleOutputView = new ConsoleOutputView();
         this.consoleInputView = new ConsoleInputView();
-        this.gameService = new GameService(new GameRepository(), new BoardPieceRepository());
+        this.gameService = new GameService(new GameRepository(), new BoardPieceRepository(), new H2ConnectionManager());
     }
 
     public void run() {

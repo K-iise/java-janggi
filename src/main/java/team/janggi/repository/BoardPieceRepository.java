@@ -1,7 +1,6 @@
 package team.janggi.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,17 +13,9 @@ import team.janggi.domain.piece.PieceFactory;
 import team.janggi.domain.piece.PieceType;
 
 public class BoardPieceRepository {
-    private final String URL = "jdbc:h2:file:./data/janggi;INIT=RUNSCRIPT FROM 'classpath:schema.sql'";
-    private final String USER = "sa";
-    private final String PASSWORD = "";
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }
-
-    public void saveBoardPiece(int game_id, Map<Position, Piece> boardPieceMap) {
+    public void saveBoardPiece(int game_id, Map<Position, Piece> boardPieceMap, Connection connection) {
         try {
-            Connection connection = getConnection();
             String sql = "INSERT INTO board_piece(game_id, type, team, x_position, y_position) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -50,10 +41,9 @@ public class BoardPieceRepository {
         }
     }
 
-    public Map<Position, Piece> loadBoardPiece(int gameId) {
+    public Map<Position, Piece> loadBoardPiece(int gameId, Connection connection) {
         Map<Position, Piece> boardPieceMap = new HashMap<>();
         try {
-            Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM board_piece WHERE game_id = ?");
             statement.setInt(1, gameId);
             ResultSet resultSet = statement.executeQuery();
