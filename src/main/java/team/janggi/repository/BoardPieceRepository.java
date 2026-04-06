@@ -14,11 +14,13 @@ import team.janggi.domain.piece.PieceType;
 
 public class BoardPieceRepository {
 
-    public void saveBoardPiece(int game_id, Map<Position, Piece> boardPieceMap, Connection connection) {
-        try {
-            String sql = "INSERT INTO board_piece(game_id, type, team, x_position, y_position) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    public static final String INSERT_BOARD_PIECE_SQL = "INSERT INTO board_piece(game_id, type, team, x_position, y_position) VALUES (?, ?, ?, ?, ?)";
+    public static final String SELECT_BOARD_PIECE_GAME_ID_SQL = "SELECT * FROM board_piece WHERE game_id = ?";
 
+    public void saveBoardPiece(int game_id, Map<Position, Piece> boardPieceMap, Connection connection) {
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOARD_PIECE_SQL)
+        ) {
             for (Map.Entry<Position, Piece> entry : boardPieceMap.entrySet()) {
                 Piece piece = entry.getValue();
                 Position position = entry.getKey();
@@ -33,9 +35,6 @@ public class BoardPieceRepository {
 
             preparedStatement.executeBatch();
 
-            preparedStatement.close();
-            connection.close();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,10 +42,11 @@ public class BoardPieceRepository {
 
     public Map<Position, Piece> loadBoardPiece(int gameId, Connection connection) {
         Map<Position, Piece> boardPieceMap = new HashMap<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM board_piece WHERE game_id = ?");
+        try (
+                PreparedStatement statement = connection.prepareStatement(SELECT_BOARD_PIECE_GAME_ID_SQL);
+                ResultSet resultSet = statement.executeQuery()
+        ) {
             statement.setInt(1, gameId);
-            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String type = resultSet.getString("type");
@@ -61,10 +61,6 @@ public class BoardPieceRepository {
                 boardPieceMap.put(position, piece);
 
             }
-            resultSet.close();
-            statement.close();
-            connection.close();
-
             return boardPieceMap;
         } catch (SQLException e) {
             throw new RuntimeException(e);

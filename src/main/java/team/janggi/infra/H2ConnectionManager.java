@@ -11,11 +11,11 @@ public class H2ConnectionManager implements ConnectionManager {
     private final String PASSWORD = "";
 
     @Override
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new SQLException(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

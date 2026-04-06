@@ -29,45 +29,39 @@ public class GameService {
     }
 
     public void saveGame(String gameName, Team team, Board board) {
-        try {
-            String currentTurn = team.name();
-            Connection connection = connectionManager.getConnection();
+        String currentTurn = team.name();
+        try (Connection connection = connectionManager.getConnection()) {
             int gameId = gameRepository.saveGame(gameName, currentTurn, connection);
             boardPieceRepository.saveBoardPiece(gameId, board.getStatus(), connection);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     public List<Game> getGames() {
-        try {
-            Connection connection = connectionManager.getConnection();
+        try (Connection connection = connectionManager.getConnection()) {
             return gameRepository.loadGame(connection);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public Board loadBoard(int gameId) {
-        try {
-            Connection connection = connectionManager.getConnection();
+        try (Connection connection = connectionManager.getConnection()) {
             Map<Position, Piece> boardPiece = boardPieceRepository.loadBoardPiece(gameId, connection);
             return new Board(boardPiece, new BoardFactory(JanggiFormation.EHHE, JanggiFormation.EHHE));
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public Team loadTurn(int gameId) {
-        try {
-            Connection connection = connectionManager.getConnection();
+        try (Connection connection = connectionManager.getConnection()) {
             Game game = gameRepository.findGameById(gameId, connection);
             return Team.from(game.getCurrentTurn());
+
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        return null;
     }
 }
