@@ -19,13 +19,17 @@ public class GameRepository {
         try (
                 PreparedStatement statement = connection.prepareStatement(SAVE_GAME_SQL,
                         Statement.RETURN_GENERATED_KEYS);
-                ResultSet generatedKeys = statement.getGeneratedKeys();
         ) {
             statement.setString(1, gameName);
             statement.setString(2, currentTurn);
             statement.executeUpdate();
-            generatedKeys.next();
-            return generatedKeys.getInt(1);
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                throw new RuntimeException("[ERROR] ID 생성에 실패했습니다.");
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,18 +39,17 @@ public class GameRepository {
     public List<Game> loadGame(Connection connection) {
         try (
                 PreparedStatement statement = connection.prepareStatement(SELECT_GAME_SQL);
-                ResultSet resultSet = statement.executeQuery()
         ) {
             List<Game> loadGames = new ArrayList<>();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String gameName = resultSet.getString("game_name");
-                String currentTurn = resultSet.getString("current_turn");
-                loadGames.add(new Game(id, gameName, currentTurn));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String gameName = resultSet.getString("game_name");
+                    String currentTurn = resultSet.getString("current_turn");
+                    loadGames.add(new Game(id, gameName, currentTurn));
+                }
+                return loadGames;
             }
-
-            return loadGames;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -55,16 +58,19 @@ public class GameRepository {
     public Game findGameById(int gameId, Connection connection) {
         try (
                 PreparedStatement statement = connection.prepareStatement(SELECT_GAME_ID_SQL);
-                ResultSet resultSet = statement.executeQuery();
         ) {
             statement.setInt(1, gameId);
-            resultSet.next();
 
-            int id = resultSet.getInt("id");
-            String gameName = resultSet.getString("game_name");
-            String currentTurn = resultSet.getString("current_turn");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String gameName = resultSet.getString("game_name");
+                    String currentTurn = resultSet.getString("current_turn");
 
-            return new Game(id, gameName, currentTurn);
+                    return new Game(id, gameName, currentTurn);
+                }
+                throw new RuntimeException("[ERROR] 게임 ID를 찾을 수 없습니다.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
