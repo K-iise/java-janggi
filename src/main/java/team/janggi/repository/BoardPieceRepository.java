@@ -34,7 +34,6 @@ public class BoardPieceRepository {
             }
 
             preparedStatement.executeBatch();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -44,24 +43,24 @@ public class BoardPieceRepository {
         Map<Position, Piece> boardPieceMap = new HashMap<>();
         try (
                 PreparedStatement statement = connection.prepareStatement(SELECT_BOARD_PIECE_GAME_ID_SQL);
-                ResultSet resultSet = statement.executeQuery()
         ) {
             statement.setInt(1, gameId);
 
-            while (resultSet.next()) {
-                String type = resultSet.getString("type");
-                String team = resultSet.getString("team");
-                int x_position = resultSet.getInt("x_position");
-                int y_position = resultSet.getInt("y_position");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String type = resultSet.getString("type");
+                    String team = resultSet.getString("team");
+                    int x_position = resultSet.getInt("x_position");
+                    int y_position = resultSet.getInt("y_position");
 
-                PieceType pieceType = PieceType.from(type);
-                Team teamType = Team.from(team);
-                Position position = new Position(x_position, y_position);
-                Piece piece = PieceFactory.createPiece(pieceType, teamType);
-                boardPieceMap.put(position, piece);
-
+                    PieceType pieceType = PieceType.from(type);
+                    Team teamType = Team.from(team);
+                    Position position = new Position(x_position, y_position);
+                    Piece piece = PieceFactory.createPiece(pieceType, teamType);
+                    boardPieceMap.put(position, piece);
+                }
+                return boardPieceMap;
             }
-            return boardPieceMap;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
