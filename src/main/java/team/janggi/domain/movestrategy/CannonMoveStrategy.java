@@ -11,6 +11,12 @@ import team.janggi.domain.piece.PieceType;
 public class CannonMoveStrategy implements MoveStrategy {
     private static final CannonMoveStrategy INSTANCE = new CannonMoveStrategy();
 
+    private static final List<Position> choDiagonalLeft = List.of(Position.of(3, 7), Position.of(5, 9));
+    private static final List<Position> choDiagonalRight = List.of(Position.of(5, 7), Position.of(3, 9));
+
+    private static final List<Position> hanDiagonalLeft = List.of(Position.of(3, 0), Position.of(5, 2));
+    private static final List<Position> hanDiagonalRight = List.of(Position.of(5, 0), Position.of(3, 2));
+    
     private CannonMoveStrategy() {
     }
 
@@ -37,21 +43,10 @@ public class CannonMoveStrategy implements MoveStrategy {
 
         final List<Piece> paths = getPaths(from, to, mapStatus);
 
-        if (!isPathsValid(paths)) {
-            return false;
-        }
-
-        return true;
-
+        return isPathsValid(paths);
     }
 
     private boolean isDiagonalJumpDirection(Position from, Position to, Map<Position, Piece> mapStatus) {
-        List<Position> choDiagonalLeft = List.of(Position.of(3, 7), Position.of(5, 9));
-        List<Position> choDiagonalRight = List.of(Position.of(5, 7), Position.of(3, 9));
-
-        List<Position> hanDiagonalLeft = List.of(Position.of(3, 0), Position.of(5, 2));
-        List<Position> hanDiagonalRight = List.of(Position.of(5, 0), Position.of(3, 2));
-
         if (isJumpAblePiece(mapStatus.get(Position.of(4, 8)))) {
             return containDirection(choDiagonalLeft, from, to) || containDirection(choDiagonalRight, from, to);
         }
