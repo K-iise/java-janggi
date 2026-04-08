@@ -17,7 +17,7 @@ public class BoardPieceRepository {
     public static final String INSERT_BOARD_PIECE_SQL = "INSERT INTO board_piece(game_id, type, team, x_position, y_position) VALUES (?, ?, ?, ?, ?)";
     public static final String SELECT_BOARD_PIECE_GAME_ID_SQL = "SELECT * FROM board_piece WHERE game_id = ?";
 
-    public void saveBoardPiece(int game_id, Map<Position, Piece> boardPieceMap, Connection connection) {
+    public void saveBoardPiece(int gameId, Map<Position, Piece> boardPieceMap, Connection connection) {
         try (
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOARD_PIECE_SQL)
         ) {
@@ -25,7 +25,7 @@ public class BoardPieceRepository {
                 Piece piece = entry.getValue();
                 Position position = entry.getKey();
 
-                preparedStatement.setInt(1, game_id);
+                preparedStatement.setInt(1, gameId);
                 preparedStatement.setString(2, piece.getPieceType().toString());
                 preparedStatement.setString(3, piece.getTeam().toString());
                 preparedStatement.setInt(4, position.x());
