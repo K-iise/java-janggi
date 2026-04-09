@@ -31,8 +31,10 @@ public class GameService {
     public void saveGame(String gameName, Team team, Board board) {
         String currentTurn = team.name();
         try (Connection connection = connectionManager.getConnection()) {
+            connection.setAutoCommit(false);
             int gameId = gameRepository.saveGame(gameName, currentTurn, connection);
             boardPieceRepository.saveBoardPiece(gameId, board.getStatus(), connection);
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
