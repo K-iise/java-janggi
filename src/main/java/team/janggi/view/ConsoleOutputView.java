@@ -65,6 +65,10 @@ public class ConsoleOutputView {
         System.out.println("저장된 게임이 없어 새 게임을 시작합니다.");
     }
 
+    public void printSavedGame(String gameName) {
+        printText(gameName + " 을 저장했습니다. 게임이 종료됩니다.");
+    }
+
     private void printColumnHeader() {
         printText(HEADER_LEFT_PADDING);
         for (int col = 0; col < X_SIZE; col++) {

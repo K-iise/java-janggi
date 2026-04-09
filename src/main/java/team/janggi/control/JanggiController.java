@@ -1,8 +1,8 @@
 package team.janggi.control;
 
 import java.util.List;
-import java.util.Map;
 import team.janggi.domain.JanggiFormation;
+import team.janggi.domain.JanggiGame;
 import team.janggi.domain.Position;
 import team.janggi.domain.Team;
 import team.janggi.domain.board.Board;
@@ -27,56 +27,71 @@ public class JanggiController {
         this.gameService = new GameService(new GameRepository(), new BoardPieceRepository(), new H2ConnectionManager());
     }
 
+    public void runJanggiGame(JanggiGame game) {
+        while (!game.isGameOver()) {
+            printCurrentScores(game.getBoard());
+            consoleOutputView.print(game.getBoard());
+            Team currentTurn = game.getCurrentTurn();
+            try {
+                String input = consoleInputView.readCommand(currentTurn);
+
+                if (input.equals("save")) {
+                    String gameName = consoleInputView.readGameName();
+                    gameService.saveGame(gameName, currentTurn, game.getBoard());
+                    consoleOutputView.printSavedGame(gameName);
+                    return;
+                }
+
+                final Position from = getSourcePosition(input);
+                final Position to = getDestinationPosition(currentTurn);
+
+                game.doTurn(from, to);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        consoleOutputView.printWinner(game.getCurrentTurn());
+    }
+
     public void run() {
         int option = consoleInputView.readStartOption();
         if (option == 1) {
-            loadAndResumeGame();
+            JanggiGame loadGame = loadAndResumeGame();
+            runJanggiGame(loadGame);
             return;
         }
-        startNewGame();
+        JanggiGame janggiGame = startNewGame();
+        runJanggiGame(janggiGame);
     }
 
-    public void startNewGame() {
+    public JanggiGame startNewGame() {
         final Board board = createBoard();
         board.initBoard();
 
         Team currentTurn = Team.CHO;
-        GameLoop(board, currentTurn);
+        return new JanggiGame(board, currentTurn);
     }
 
-    private void loadAndResumeGame() {
+    private JanggiGame loadAndResumeGame() {
         List<Game> games = gameService.getGames();
         consoleOutputView.printGames(games);
 
         if (games.isEmpty()) {
             consoleOutputView.printNoSavedGames();
-            startNewGame();
-            return;
+            return startNewGame();
         }
 
         int selectedId = getSelectedGameId(games);
 
         if (selectedId == games.size() + 1) {
-            startNewGame();
-            return;
+            return startNewGame();
         }
 
         Board board = gameService.loadBoard(selectedId);
         Team currentTurn = gameService.loadTurn(selectedId);
-        GameLoop(board, currentTurn);
+        return new JanggiGame(board, currentTurn);
     }
 
-    private void GameLoop(Board board, Team currentTurn) {
-        while (true) {
-            printCurrentScores(board);
-            currentTurn = doTurn(board, currentTurn);
-
-            if (board.isKingDisappeared()) {
-                consoleOutputView.printWinner(currentTurn);
-                break;
-            }
-        }
-    }
 
     private int getSelectedGameId(List<Game> games) {
         while (true) {
@@ -132,39 +147,9 @@ public class JanggiController {
         }
     }
 
-    private Team doTurn(Board board, Team currentTurn) {
-        consoleOutputView.print(board);
-
-        try {
-            String input = consoleInputView.readCommand(currentTurn);
-
-            if (input.equals("save")) {
-                String gameName = consoleInputView.readGameName();
-                gameService.saveGame(gameName, currentTurn, board);
-                System.out.println(gameName + " 을 저장했습니다. 게임이 종료됩니다.");
-                System.exit(0);
-            }
-
-            final Position from = getSourcePosition(input);
-            final Position to = getDestinationPosition(currentTurn);
-
-            board.move(currentTurn, from, to);
-            return nextTeam(currentTurn);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return currentTurn;
-        }
-    }
-
     private Position getSourcePosition(String input) {
-        while (true) {
-            try {
-                List<Integer> positions = Parser.parseByDelimiter(input, "[ERROR] 좌표는 숫자 형식이어야 합니다.");
-                return Position.of(positions.get(0), positions.get(1));
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        List<Integer> positions = Parser.parseByDelimiter(input, "[ERROR] 좌표는 숫자 형식이어야 합니다.");
+        return Position.of(positions.get(0), positions.get(1));
     }
 
     private Position getDestinationPosition(Team currentTurn) {
@@ -176,9 +161,5 @@ public class JanggiController {
                 System.out.println(e.getMessage());
             }
         }
-    }
-
-    private Team nextTeam(Team team) {
-        return Map.of(Team.CHO, Team.HAN, Team.HAN, Team.CHO).get(team);
     }
 }
