@@ -18,25 +18,28 @@ import team.janggi.domain.piece.PieceType;
 import team.janggi.entity.Game;
 import team.janggi.infra.ConnectionManager;
 import team.janggi.infra.TestH2Connection;
+import team.janggi.infra.TransactionManager;
 import team.janggi.repository.BoardPieceRepository;
 import team.janggi.repository.GameRepository;
 
 public class GameServiceTest {
     private GameRepository gameRepository;
     private BoardPieceRepository boardPieceRepository;
-    private ConnectionManager connectionManager;
+    private TransactionManager transactionManager;
 
     @BeforeEach
     public void setUp() {
         gameRepository = new GameRepository();
         boardPieceRepository = new BoardPieceRepository();
-        connectionManager = new TestH2Connection();
+        ConnectionManager connectionManager = new TestH2Connection();
+        transactionManager = new TransactionManager(connectionManager);
     }
 
     @Test
     public void 현재_보드_상태와_게임_정보를_DB에_저장한다() {
         // given
-        GameService gameService = new GameService(gameRepository, boardPieceRepository, connectionManager);
+        GameService gameService = new GameService(gameRepository, boardPieceRepository,
+                transactionManager);
         String gameName = "test_game";
         Team team = Team.CHO;
         Board board = new Board(new BoardFactory(JanggiFormation.EHHE, JanggiFormation.EHHE));
@@ -48,7 +51,8 @@ public class GameServiceTest {
     @Test
     public void DB에_기록된_게임_정보를_DB에서_조회한다() {
         // given
-        GameService gameService = new GameService(gameRepository, boardPieceRepository, connectionManager);
+        GameService gameService = new GameService(gameRepository, boardPieceRepository,
+                transactionManager);
 
         // when
         List<Game> games = gameService.getGames();
@@ -75,7 +79,8 @@ public class GameServiceTest {
     void 특정_ID의_게임_보드_상태를_정상적으로_복원한다() {
         // given
         int gameId = 1;
-        GameService gameService = new GameService(gameRepository, boardPieceRepository, connectionManager);
+        GameService gameService = new GameService(gameRepository, boardPieceRepository,
+                transactionManager);
 
         // when
         Board loadedBoard = gameService.loadBoard(gameId);
@@ -94,7 +99,8 @@ public class GameServiceTest {
     void 특정_ID_게임의_현재_차례_정보를_가져온다() {
         // given
         int gameId = 1;
-        GameService gameService = new GameService(gameRepository, boardPieceRepository, connectionManager);
+        GameService gameService = new GameService(gameRepository, boardPieceRepository,
+                transactionManager);
 
         // when
         Team currentTurn = gameService.loadTurn(gameId);
