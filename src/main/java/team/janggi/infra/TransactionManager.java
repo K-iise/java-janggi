@@ -13,11 +13,16 @@ public class TransactionManager {
     }
 
     public <T> T executeTransaction(Function<Connection, T> function) {
-        try (Connection connection = this.connectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             connection.setAutoCommit(false);
-            T apply = function.apply(connection);
-            connection.commit();
-            return apply;
+            try {
+                T apply = function.apply(connection);
+                connection.commit();
+                return apply;
+            } catch (Exception e) {
+                connection.rollback();
+                throw new RuntimeException(e);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -26,8 +31,13 @@ public class TransactionManager {
     public void executeTransaction(Consumer<Connection> consumer) {
         try (Connection connection = connectionManager.getConnection()) {
             connection.setAutoCommit(false);
-            consumer.accept(connection);
-            connection.commit();
+            try {
+                consumer.accept(connection);
+                connection.commit();
+            } catch (Exception e) {
+                connection.rollback();
+                throw new RuntimeException(e);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
